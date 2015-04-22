@@ -1,0 +1,30 @@
+package lalapoc.entity;
+
+import org.springframework.data.neo4j.annotation.*;
+
+import java.util.Set;
+
+import static org.neo4j.graphdb.Direction.INCOMING;
+import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
+
+@NodeEntity
+public class Movie {
+
+	@GraphId
+	Long id;
+
+	@Indexed(indexType = FULLTEXT, indexName = "search")
+	String title;
+
+	Person director;
+
+	@RelatedTo(type = "ACTS_IN", direction = INCOMING)
+	Set<Person> actors;
+
+	@RelatedToVia(type = "RATED")
+	Iterable<Rating> ratings;
+
+	@Query("start movie=node({self}) match movie-->genre<--similar return similar")
+	Iterable<Movie> similarMovies;
+
+}
