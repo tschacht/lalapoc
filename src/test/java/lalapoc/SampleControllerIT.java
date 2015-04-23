@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URL;
+import java.time.Instant;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
@@ -50,6 +51,20 @@ public class SampleControllerIT {
 
 	@Test
 	public void testCreateSampleNode() throws Exception {
+		int n = 100;
+		System.out.println("#####");
+		System.out.println("creating n nodes. n=" + n);
+		Instant begin = Instant.now();
+		System.out.println(begin);
+		for( int i = 0; i < n; i++ ) {
+			template.postForEntity(base.toString() + "samples", null, String.class);
+			if( i % 5 == 0 ) System.out.print(i + ", ");
+		}
+		Instant end = Instant.now();
+		System.out.println(end);
+		System.out.println("took millis: " + (end.toEpochMilli() - begin.toEpochMilli()));
+		System.out.println("#####");
+
 		ResponseEntity<String> response = template.postForEntity(base.toString() + "samples", null, String.class);
 		assertThat(response.getBody().matches("(.*pipapo.*){1}"), is(true));
 	}
