@@ -1,13 +1,13 @@
 package lalapoc;
 
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
+import org.springframework.data.neo4j.rest.SpringCypherRestGraphDatabase;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.URISyntaxException;
@@ -48,7 +48,8 @@ public class LalapocApplication extends Neo4jConfiguration {
 		//System.out.println(NEO4J_REST_URL + NEO4J_USER + NEO4J_PASSWORD + NEO4J_EMBEDDED_PATH);
 		//System.out.println("###");
 		//return new RestGraphDatabase(NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD);
-		return new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_EMBEDDED_PATH);
+		//return new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_EMBEDDED_PATH);
+		return new SpringCypherRestGraphDatabase(NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD);
 	}
 
 	public static void main(String[] args) {
