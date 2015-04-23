@@ -44,6 +44,12 @@ public class SampleControllerIT {
 	}
 
 	@Test
+	public void testReadCustomQueryNodes() throws Exception {
+		ResponseEntity<String> response = template.getForEntity(base.toString() + "custom", String.class);
+		assertThat(response.getBody().matches("(.*pipapo.*){2,}"), is(true));
+	}
+
+	@Test
 	public void testReadSampleNodes() throws Exception {
 		ResponseEntity<String> response = template.getForEntity(base.toString() + "samples", String.class);
 		assertThat(response.getBody().matches("(.*pipapo.*){2,}"), is(true));
