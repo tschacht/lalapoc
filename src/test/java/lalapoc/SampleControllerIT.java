@@ -49,7 +49,7 @@ public class SampleControllerIT {
 	}
 
 	@Test
-	public void testRreateSampleNode() throws Exception {
+	public void testCreateSampleNode() throws Exception {
 		ResponseEntity<String> response = template.postForEntity(base.toString() + "samples", null, String.class);
 		assertThat(response.getBody().matches("(.*pipapo.*){1}"), is(true));
 	}
