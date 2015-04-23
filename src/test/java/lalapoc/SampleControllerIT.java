@@ -61,13 +61,13 @@ public class SampleControllerIT {
 		System.out.println("#####");
 		System.out.println("creating n nodes. n=" + n);
 		Instant begin = Instant.now();
-		System.out.println(begin);
+		System.out.println("BEGIN: " + begin);
 		for( int i = 0; i < n; i++ ) {
 			template.postForEntity(base.toString() + "samples", null, String.class);
 			if( i % 5 == 0 ) System.out.print(i + ", ");
 		}
 		Instant end = Instant.now();
-		System.out.println(end);
+		System.out.println("\nEND " + end);
 		System.out.println("took millis: " + (end.toEpochMilli() - begin.toEpochMilli()));
 		System.out.println("#####");
 
