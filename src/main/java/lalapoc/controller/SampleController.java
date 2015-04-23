@@ -33,7 +33,7 @@ public class SampleController {
 	}
 
 	@Transactional
-	@RequestMapping(value = "/samples", method = RequestMethod.PUT)
+	@RequestMapping(value = "/samples", method = RequestMethod.POST)
 	public SampleNode createSampleNode() {
 		SampleNode n = new SampleNode();
 		n.setName("pipapo - " + Calendar.getInstance().getTime());
