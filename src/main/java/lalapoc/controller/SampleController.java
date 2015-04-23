@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -40,7 +40,7 @@ public class SampleController {
 	public SampleNode createSampleNode() {
 		SampleNode n = new SampleNode();
 		Random r = new Random();
-		n.setName("pipapo_" + r.nextInt(10) + " - " + Calendar.getInstance().getTime());
+		n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
 		sampleNodeRepository.save(n);
 		return n;
 	}
