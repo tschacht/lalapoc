@@ -10,10 +10,10 @@ import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 public class SampleNode {
 
 	@GraphId
-	protected Long id;
+	private Long id;
 
 	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_sample")
-	protected String name;
+	private String name;
 
 	public Long getId() {
 		return id;
