@@ -46,7 +46,7 @@ public class SampleControllerTest {
 		n2.setId(2L);
 
 		when(sampleNodeRepositoryMock.findAll()).thenReturn(QueryResultBuilder.from(n1, n2));
-		when(sampleNodeRepositoryMock.findCustomQuery()).thenReturn(QueryResultBuilder.from(n1, n2));
+		when(sampleNodeRepositoryMock.findByCustomQuery()).thenReturn(QueryResultBuilder.from(n1, n2));
 
 		mvc = MockMvcBuilders.standaloneSetup(testling).build();
 	}
@@ -58,8 +58,14 @@ public class SampleControllerTest {
 	}
 
 	@Test
-	public void testReadCustomQueryNodes() throws Exception {
+	public void testReadCustomNodesByQuery() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/custom").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	public void testReadCustomNodesByPatternQuery() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/custom/5").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 

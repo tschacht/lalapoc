@@ -4,6 +4,7 @@ import lalapoc.entity.SampleNode;
 import lalapoc.repository.SampleNodeRepository;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,15 @@ public class SampleController {
 	private SampleNodeRepository sampleNodeRepository;
 
 	@Transactional
+	@RequestMapping(value = "/custom/{number}", method = RequestMethod.GET)
+	public Iterable<SampleNode> readNodesByCustomPatternQuery(@PathVariable long number) {
+		return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
+	}
+
+	@Transactional
 	@RequestMapping(value = "/custom", method = RequestMethod.GET)
-	public Iterable<SampleNode> readCustomQueryNodes() {
-		return sampleNodeRepository.findCustomQuery();
+	public Iterable<SampleNode> readNodesByCustomQuery() {
+		return sampleNodeRepository.findByCustomQuery();
 	}
 
 	@Transactional
