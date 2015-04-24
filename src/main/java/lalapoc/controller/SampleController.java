@@ -26,7 +26,7 @@ public class SampleController {
 	@Transactional
 	@RequestMapping(value = "/custom", method = RequestMethod.GET)
 	public Iterable<SampleNode> readCustomQueryNodes() {
-		return yield(sampleNodeRepository.findCustomQuery());
+		return sampleNodeRepository.findCustomQuery();
 	}
 
 	@Transactional
@@ -50,6 +50,7 @@ public class SampleController {
 		return new ModelAndView("home");
 	}
 
+	// TODO: obsolete with @Fetch?
 	private <T> Iterable<T> yield(Iterable<T> result) {
 		List<T> list = new ArrayList<>();
 		if( result != null ) {
