@@ -35,7 +35,7 @@ public class SampleController {
  }
 
  @RequestMapping( value = "/custom/{number}", method = RequestMethod.GET )
- public Iterable<SampleNode> readNodesByCustomPatternQuery( @PathVariable long number ) {
+ public Iterable<SampleNode> readNodesByNumber( @PathVariable long number ) {
 	return sampleService.readNodesByNumber(number);
  }
 
