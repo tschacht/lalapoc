@@ -35,7 +35,7 @@ public class SampleService implements SampleServiceMethods {
  @Override
  @Transactional
  @Fetch
- public Collection<SampleNode> readNodesByNumber(Long number) {
+ public Collection<SampleNode> readNodesByNumber( Long number ) {
 	return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
  }
 

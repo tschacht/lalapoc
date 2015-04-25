@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
-@RelationshipEntity(type = "ASKS_FOR")
+@RelationshipEntity( type = "ASKS_FOR" )
 public class Solicitation {
 
  @GraphId
@@ -23,7 +23,7 @@ public class Solicitation {
 	return id;
  }
 
- public void setId(Long id) {
+ public void setId( Long id ) {
 	this.id = id;
  }
 
@@ -31,7 +31,7 @@ public class Solicitation {
 	return quantity;
  }
 
- public void setQuantity(int quantity) {
+ public void setQuantity( int quantity ) {
 	this.quantity = quantity;
  }
 
@@ -39,7 +39,7 @@ public class Solicitation {
 	return name;
  }
 
- public void setName(Name name) {
+ public void setName( Name name ) {
 	this.name = name;
  }
 
@@ -47,7 +47,7 @@ public class Solicitation {
 	return need;
  }
 
- public void setNeed(Need need) {
+ public void setNeed( Need need ) {
 	this.need = need;
  }
 

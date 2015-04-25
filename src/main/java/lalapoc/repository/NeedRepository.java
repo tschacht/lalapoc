@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface NeedRepository extends GraphRepository<Need> {
 
  @Fetch
- @Query("match (n:Need) where n.name =~ {pattern} return n")
- Iterable<Need> findByPattern(@Param("pattern") String pattern);
+ @Query( "match (n:Need) where n.name =~ {pattern} return n" )
+ Iterable<Need> findByPattern( @Param( "pattern" ) String pattern );
 
 }

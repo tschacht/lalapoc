@@ -10,7 +10,7 @@ public interface SampleServiceMethods {
 
  Collection<SampleNode> readNodesByCustomQuery();
 
- Collection<SampleNode> readNodesByNumber(Long number);
+ Collection<SampleNode> readNodesByNumber( Long number );
 
  SampleNode createSampleNode();
 

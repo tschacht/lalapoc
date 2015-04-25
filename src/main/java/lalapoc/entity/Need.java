@@ -16,17 +16,17 @@ public class Need {
  @GraphId
  private Long id;
 
- @Indexed(unique = true, indexType = FULLTEXT, indexName = "search_need")
+ @Indexed( unique = true, indexType = FULLTEXT, indexName = "search_need" )
  private String name;
 
- @RelatedTo(type = "ASKS_FOR", direction = Direction.INCOMING)
+ @RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
  private Set<Name> requester;
 
  public Long getId() {
 	return id;
  }
 
- public void setId(Long id) {
+ public void setId( Long id ) {
 	this.id = id;
  }
 
@@ -34,7 +34,7 @@ public class Need {
 	return name;
  }
 
- public void setName(String name) {
+ public void setName( String name ) {
 	this.name = name;
  }
 

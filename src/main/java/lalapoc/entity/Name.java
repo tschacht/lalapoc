@@ -17,14 +17,14 @@ public class Name {
  @GraphId
  private Long id;
 
- @Indexed(unique = true, indexType = FULLTEXT, indexName = "search_name")
+ @Indexed( unique = true, indexType = FULLTEXT, indexName = "search_name" )
  private String name;
 
  private int people;
 
  private LocalTime time;
 
- @RelatedTo(type = "ASKS_FOR", direction = Direction.OUTGOING)
+ @RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
  private Set<Need> needs;
 
  private String position;
@@ -33,7 +33,7 @@ public class Name {
 	return id;
  }
 
- public void setId(Long id) {
+ public void setId( Long id ) {
 	this.id = id;
  }
 
@@ -41,7 +41,7 @@ public class Name {
 	return name;
  }
 
- public void setName(String name) {
+ public void setName( String name ) {
 	this.name = name;
  }
 
@@ -49,7 +49,7 @@ public class Name {
 	return people;
  }
 
- public void setPeople(int people) {
+ public void setPeople( int people ) {
 	this.people = people;
  }
 
@@ -57,7 +57,7 @@ public class Name {
 	return time;
  }
 
- public void setTime(LocalTime time) {
+ public void setTime( LocalTime time ) {
 	this.time = time;
  }
 
@@ -65,7 +65,7 @@ public class Name {
 	return needs;
  }
 
- public void setNeeds(Set<Need> needs) {
+ public void setNeeds( Set<Need> needs ) {
 	this.needs = needs;
  }
 
@@ -73,7 +73,7 @@ public class Name {
 	return position;
  }
 
- public void setPosition(String position) {
+ public void setPosition( String position ) {
 	this.position = position;
  }
 
