@@ -1,9 +1,8 @@
 package lalapoc.controller;
 
+import lalapoc.business.SampleServiceMethods;
 import lalapoc.entity.SampleNode;
-import lalapoc.repository.SampleNodeRepository;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,61 +10,38 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 //@RestResource
 @RestController
 @EnableAutoConfiguration
 public class SampleController {
 
-	@Inject
-	private SampleNodeRepository sampleNodeRepository;
+ @Inject
+ private SampleServiceMethods sampleService;
 
-	@Transactional
-	@RequestMapping(value = "/custom/{number}", method = RequestMethod.GET)
-	public Iterable<SampleNode> readNodesByCustomPatternQuery(@PathVariable long number) {
-		return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
-	}
+ @RequestMapping(value = "/", method = RequestMethod.GET)
+ public ModelAndView home() {
+	return new ModelAndView("home");
+ }
 
-	@Transactional
-	@RequestMapping(value = "/custom", method = RequestMethod.GET)
-	public Iterable<SampleNode> readNodesByCustomQuery() {
-		return sampleNodeRepository.findByCustomQuery();
-	}
+ @RequestMapping(value = "/samples", method = RequestMethod.GET)
+ public Iterable<SampleNode> readSampleNodes() {
+	return sampleService.readSampleNodes();
+ }
 
-	@Transactional
-	@RequestMapping(value = "/samples", method = RequestMethod.GET)
-	public Iterable<SampleNode> readSampleNodes() {
-		return yield(sampleNodeRepository.findAll());
-	}
+ @RequestMapping(value = "/custom", method = RequestMethod.GET)
+ public Iterable<SampleNode> readNodesByCustomQuery() {
+	return sampleService.readNodesByCustomQuery();
+ }
 
-	@Transactional
-	@RequestMapping(value = "/samples", method = RequestMethod.POST)
-	public SampleNode createSampleNode() {
-		SampleNode n = new SampleNode();
-		Random r = new Random();
-		n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
-		sampleNodeRepository.save(n);
-		return n;
-	}
+ @RequestMapping(value = "/custom/{number}", method = RequestMethod.GET)
+ public Iterable<SampleNode> readNodesByCustomPatternQuery(@PathVariable long number) {
+	return sampleService.readNodesByNumber(number);
+ }
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home() {
-		return new ModelAndView("home");
-	}
-
-	// TODO: obsolete with @Fetch?
-	private <T> Iterable<T> yield(Iterable<T> result) {
-		List<T> list = new ArrayList<>();
-		if( result != null ) {
-			for( T o : result ) {
-				list.add(o);
-			}
-		}
-		return list;
-	}
+ @RequestMapping(value = "/samples", method = RequestMethod.POST)
+ public SampleNode createSampleNode() {
+	return sampleService.createSampleNode();
+ }
 
 }

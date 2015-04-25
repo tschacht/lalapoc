@@ -1,5 +1,6 @@
 package lalapoc;
 
+import lalapoc.business.SampleServiceMethods;
 import lalapoc.controller.SampleController;
 import lalapoc.entity.SampleNode;
 import lalapoc.repository.SampleNodeRepository;
@@ -30,6 +31,9 @@ public class SampleControllerTest {
 
 	@Mock
 	private SampleNodeRepository sampleNodeRepositoryMock;
+
+ @InjectMocks
+ private SampleServiceMethods sampleService;
 
 	@InjectMocks
 	private SampleController testling;
