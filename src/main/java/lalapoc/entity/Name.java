@@ -27,6 +27,8 @@ public class Name {
  @RelatedTo(type = "ASKS_FOR", direction = Direction.OUTGOING)
  private Set<Need> needs;
 
+ private String position;
+
  public Long getId() {
 	return id;
  }
@@ -67,4 +69,12 @@ public class Name {
 	this.needs = needs;
  }
 
+ public String getPosition() {
+	return position;
+ }
+
+ public void setPosition(String position) {
+	this.position = position;
+ }
+ 
 }
