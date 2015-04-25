@@ -1,13 +1,10 @@
 package lalapoc.entity;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+import org.springframework.data.neo4j.annotation.*;
 
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.Collection;
 
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 
@@ -26,8 +23,12 @@ public class Name {
 
 	private String position;
 
-	@RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
-	private Set<Need> needs;
+	//@RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
+	//private Set<Need> needs;
+
+	@Fetch
+	@RelatedToVia( type = "ASKS_FOR", direction = Direction.OUTGOING )
+	private Collection<Solicitation> solicitations;
 
 	public Long getId() {
 		return id;
