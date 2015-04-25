@@ -2,6 +2,7 @@ package lalapoc.business;
 
 import com.google.common.collect.Lists;
 import lalapoc.entity.SampleNode;
+import lalapoc.entity.factory.SampleNodeFactory;
 import lalapoc.repository.SampleNodeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,14 +35,8 @@ public class SampleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		SampleNode n1 = new SampleNode();
-		SampleNode n2 = new SampleNode();
-
-		n1.setName("N1");
-		n2.setName("N2");
-
-		n1.setId(1L);
-		n2.setId(2L);
+		SampleNode n1 = SampleNodeFactory.newSampleNode("N1", 1L);
+		SampleNode n2 = SampleNodeFactory.newSampleNode("N2", 2L);
 
 		when(sampleNodeRepositoryMock.findAll()).thenReturn(QueryResultBuilder.from(n1, n2));
 		when(sampleNodeRepositoryMock.findByCustomQuery()).thenReturn(Lists.newArrayList(QueryResultBuilder.from(n1, n2)));

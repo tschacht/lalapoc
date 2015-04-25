@@ -24,10 +24,10 @@ public class Name {
 
 	private LocalTime time;
 
+	private String position;
+
 	@RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
 	private Set<Need> needs;
-
-	private String position;
 
 	public Long getId() {
 		return id;
@@ -59,14 +59,6 @@ public class Name {
 
 	public void setTime( LocalTime time ) {
 		this.time = time;
-	}
-
-	public Set<Need> getNeeds() {
-		return needs;
-	}
-
-	public void setNeeds( Set<Need> needs ) {
-		this.needs = needs;
 	}
 
 	public String getPosition() {

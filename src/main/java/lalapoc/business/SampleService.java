@@ -2,6 +2,7 @@ package lalapoc.business;
 
 import com.google.common.collect.Lists;
 import lalapoc.entity.SampleNode;
+import lalapoc.entity.factory.SampleNodeFactory;
 import lalapoc.repository.SampleNodeRepository;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,9 +44,8 @@ public class SampleService implements SampleServiceMethods {
 	@Transactional
 	@Fetch
 	public SampleNode createSampleNode() {
-		SampleNode n = new SampleNode();
 		Random r = new Random();
-		n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
+		SampleNode n = SampleNodeFactory.newSampleNode("pipapo_" + r.nextInt(10) + " - " + Instant.now());
 		return sampleNodeRepository.save(n);
 	}
 

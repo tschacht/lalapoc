@@ -3,6 +3,8 @@ package lalapoc.business;
 import com.google.common.collect.Lists;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
+import lalapoc.entity.factory.NameFactory;
+import lalapoc.entity.factory.NeedFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.junit.Before;
@@ -48,29 +50,14 @@ public class RescueServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		need1 = new Need();
-		need2 = new Need();
-		need3 = new Need();
-
-		need1.setDescription("Water 1l");
-		need2.setDescription("Blanket");
-		need3.setDescription("Antibiotics");
-
-		name1 = new Name();
-		name2 = new Name();
-
-		name1.setName("Refugee A");
-		name2.setName("Refugee B");
-
-		name1.setPeople(5);
-		name2.setPeople(10);
-
-		name1.setPosition("City A");
-		name2.setPosition("City B");
-
 		time = LocalTime.now();
-		name1.setTime(time);
-		name2.setTime(time);
+
+		need1 = NeedFactory.newNeed("Water 1l");
+		need2 = NeedFactory.newNeed("Blanket");
+		need3 = NeedFactory.newNeed("Antibiotics");
+
+		name1 = NameFactory.newName("Refugee A", 5, "City A", time);
+		name2 = NameFactory.newName("Refugee B", 10, "City B", time);
 
 		// TODO: relations
 
