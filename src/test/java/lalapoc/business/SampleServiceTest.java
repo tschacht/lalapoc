@@ -1,7 +1,6 @@
-package lalapoc;
+package lalapoc.business;
 
 import com.google.common.collect.Lists;
-import lalapoc.business.SampleService;
 import lalapoc.entity.SampleNode;
 import lalapoc.repository.SampleNodeRepository;
 import org.junit.Before;

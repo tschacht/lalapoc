@@ -17,7 +17,7 @@ public class Need {
 	private Long id;
 
 	@Indexed( unique = true, indexType = FULLTEXT, indexName = "search_need" )
-	private String name;
+	private String description;
 
 	@RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
 	private Set<Name> requester;
@@ -30,12 +30,12 @@ public class Need {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setName( String name ) {
-		this.name = name;
+	public void setDescription( String description ) {
+		this.description = description;
 	}
 
 }
