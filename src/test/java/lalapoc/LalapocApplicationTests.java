@@ -11,8 +11,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 public class LalapocApplicationTests {
 
- @Test
- public void contextLoads() {
- }
+	@Test
+	public void contextLoads() {
+	}
 
 }

@@ -15,38 +15,38 @@ import java.util.Random;
 @Named
 public class SampleService implements SampleServiceMethods {
 
- @Inject
- private SampleNodeRepository sampleNodeRepository;
+	@Inject
+	private SampleNodeRepository sampleNodeRepository;
 
- @Override
- @Transactional
- @Fetch
- public Collection<SampleNode> readSampleNodes() {
-	return Lists.newArrayList(sampleNodeRepository.findAll());
- }
+	@Override
+	@Transactional
+	@Fetch
+	public Collection<SampleNode> readSampleNodes() {
+		return Lists.newArrayList(sampleNodeRepository.findAll());
+	}
 
- @Override
- @Transactional
- @Fetch
- public Collection<SampleNode> readNodesByCustomQuery() {
-	return sampleNodeRepository.findByCustomQuery();
- }
+	@Override
+	@Transactional
+	@Fetch
+	public Collection<SampleNode> readNodesByCustomQuery() {
+		return sampleNodeRepository.findByCustomQuery();
+	}
 
- @Override
- @Transactional
- @Fetch
- public Collection<SampleNode> readNodesByNumber( Long number ) {
-	return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
- }
+	@Override
+	@Transactional
+	@Fetch
+	public Collection<SampleNode> readNodesByNumber( Long number ) {
+		return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
+	}
 
- @Override
- @Transactional
- @Fetch
- public SampleNode createSampleNode() {
-	SampleNode n = new SampleNode();
-	Random r = new Random();
-	n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
-	return sampleNodeRepository.save(n);
- }
+	@Override
+	@Transactional
+	@Fetch
+	public SampleNode createSampleNode() {
+		SampleNode n = new SampleNode();
+		Random r = new Random();
+		n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
+		return sampleNodeRepository.save(n);
+	}
 
 }

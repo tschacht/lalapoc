@@ -6,12 +6,12 @@ import java.util.Collection;
 
 public interface SampleServiceMethods {
 
- Collection<SampleNode> readSampleNodes();
+	Collection<SampleNode> readSampleNodes();
 
- Collection<SampleNode> readNodesByCustomQuery();
+	Collection<SampleNode> readNodesByCustomQuery();
 
- Collection<SampleNode> readNodesByNumber( Long number );
+	Collection<SampleNode> readNodesByNumber( Long number );
 
- SampleNode createSampleNode();
+	SampleNode createSampleNode();
 
 }

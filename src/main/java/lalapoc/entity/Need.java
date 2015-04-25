@@ -13,29 +13,29 @@ import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 @NodeEntity
 public class Need {
 
- @GraphId
- private Long id;
+	@GraphId
+	private Long id;
 
- @Indexed( unique = true, indexType = FULLTEXT, indexName = "search_need" )
- private String name;
+	@Indexed( unique = true, indexType = FULLTEXT, indexName = "search_need" )
+	private String name;
 
- @RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
- private Set<Name> requester;
+	@RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
+	private Set<Name> requester;
 
- public Long getId() {
-	return id;
- }
+	public Long getId() {
+		return id;
+	}
 
- public void setId( Long id ) {
-	this.id = id;
- }
+	public void setId( Long id ) {
+		this.id = id;
+	}
 
- public String getName() {
-	return name;
- }
+	public String getName() {
+		return name;
+	}
 
- public void setName( String name ) {
-	this.name = name;
- }
+	public void setName( String name ) {
+		this.name = name;
+	}
 
 }

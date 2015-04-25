@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface NameRepository extends GraphRepository<Name> {
 
- @Fetch
- @Query( "match (n:Name) where n.name =~ {pattern} return n" )
- Iterable<Name> findByPattern( @Param( "pattern" ) String pattern );
+	@Fetch
+	@Query( "match (n:Name) where n.name =~ {pattern} return n" )
+	Iterable<Name> findByPattern( @Param( "pattern" ) String pattern );
 
 }

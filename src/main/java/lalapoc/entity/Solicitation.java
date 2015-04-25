@@ -8,47 +8,47 @@ import org.springframework.data.neo4j.annotation.StartNode;
 @RelationshipEntity( type = "ASKS_FOR" )
 public class Solicitation {
 
- @GraphId
- Long id;
+	@GraphId
+	Long id;
 
- private int quantity;
+	private int quantity;
 
- @StartNode
- private Name name;
+	@StartNode
+	private Name name;
 
- @EndNode
- private Need need;
+	@EndNode
+	private Need need;
 
- public Long getId() {
-	return id;
- }
+	public Long getId() {
+		return id;
+	}
 
- public void setId( Long id ) {
-	this.id = id;
- }
+	public void setId( Long id ) {
+		this.id = id;
+	}
 
- public int getQuantity() {
-	return quantity;
- }
+	public int getQuantity() {
+		return quantity;
+	}
 
- public void setQuantity( int quantity ) {
-	this.quantity = quantity;
- }
+	public void setQuantity( int quantity ) {
+		this.quantity = quantity;
+	}
 
- public Name getName() {
-	return name;
- }
+	public Name getName() {
+		return name;
+	}
 
- public void setName( Name name ) {
-	this.name = name;
- }
+	public void setName( Name name ) {
+		this.name = name;
+	}
 
- public Need getNeed() {
-	return need;
- }
+	public Need getNeed() {
+		return need;
+	}
 
- public void setNeed( Need need ) {
-	this.need = need;
- }
+	public void setNeed( Need need ) {
+		this.need = need;
+	}
 
 }
