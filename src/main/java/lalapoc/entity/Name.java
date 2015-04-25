@@ -76,5 +76,5 @@ public class Name {
  public void setPosition(String position) {
 	this.position = position;
  }
- 
+
 }

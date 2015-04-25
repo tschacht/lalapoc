@@ -1,6 +1,7 @@
 package lalapoc;
 
-import lalapoc.business.SampleServiceMethods;
+import com.google.common.collect.Lists;
+import lalapoc.business.SampleService;
 import lalapoc.entity.SampleNode;
 import lalapoc.repository.SampleNodeRepository;
 import org.junit.Before;
@@ -9,23 +10,23 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.neo4j.conversion.QueryResultBuilder;
-import org.springframework.mock.web.MockServletContext;
-import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Collection;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringApplicationConfiguration(classes = MockServletContext.class)
-@WebAppConfiguration
 public class SampleServiceTest {
 
  @Mock
  private SampleNodeRepository sampleNodeRepositoryMock;
 
  @InjectMocks
- private SampleServiceMethods testling;
+ private SampleService testling;
 
  @Before
  public void setUp() throws Exception {
@@ -39,11 +40,15 @@ public class SampleServiceTest {
 	n2.setId(2L);
 
 	when(sampleNodeRepositoryMock.findAll()).thenReturn(QueryResultBuilder.from(n1, n2));
-	when(sampleNodeRepositoryMock.findByCustomQuery()).thenReturn(QueryResultBuilder.from(n1, n2));
+	when(sampleNodeRepositoryMock.findByCustomQuery()).thenReturn(Lists.newArrayList(QueryResultBuilder.from(n1, n2)));
  }
 
  @Test
  public void testReadSampleNodes() throws Exception {
+	Collection<SampleNode> result = testling.readSampleNodes();
+
+	assertThat(result, notNullValue());
+	assertThat(result.size(), is(2));
  }
 
  @Test

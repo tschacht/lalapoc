@@ -1,14 +1,18 @@
 package lalapoc.business;
 
+import com.google.common.collect.Lists;
 import lalapoc.entity.SampleNode;
 import lalapoc.repository.SampleNodeRepository;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Random;
 
+@Named
 public class SampleService implements SampleServiceMethods {
 
  @Inject
@@ -17,21 +21,21 @@ public class SampleService implements SampleServiceMethods {
  @Override
  @Transactional
  @Fetch
- public Iterable<SampleNode> readSampleNodes() {
-	return sampleNodeRepository.findAll();
+ public Collection<SampleNode> readSampleNodes() {
+	return Lists.newArrayList(sampleNodeRepository.findAll());
  }
 
  @Override
  @Transactional
  @Fetch
- public Iterable<SampleNode> readNodesByCustomQuery() {
+ public Collection<SampleNode> readNodesByCustomQuery() {
 	return sampleNodeRepository.findByCustomQuery();
  }
 
  @Override
  @Transactional
  @Fetch
- public Iterable<SampleNode> readNodesByNumber(Long number) {
+ public Collection<SampleNode> readNodesByNumber(Long number) {
 	return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
  }
 
