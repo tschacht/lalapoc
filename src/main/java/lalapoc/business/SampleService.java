@@ -46,8 +46,7 @@ public class SampleService implements SampleServiceMethods {
 	SampleNode n = new SampleNode();
 	Random r = new Random();
 	n.setName("pipapo_" + r.nextInt(10) + " - " + Instant.now());
-	sampleNodeRepository.save(n);
-	return n;
+	return sampleNodeRepository.save(n);
  }
 
 }
