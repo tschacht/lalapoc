@@ -7,16 +7,16 @@ import java.util.Collection;
 
 public interface RescueServiceMethods {
 
-	Name createName();
+	Name createName( Name name );
 
-	Need createNeed();
+	Need createNeed( Need need );
 
 	Collection<Name> findNames();
 
-	Collection<Name> findNamesByName();
+	Collection<Name> findNamesByName( String name );
 
 	Collection<Need> findNeeds();
 
-	Collection<Need> findNeedsByDescr();
+	Collection<Need> findNeedsByDescr( String descr );
 
 }
