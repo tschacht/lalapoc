@@ -86,7 +86,7 @@
 	 <artifactId>javax.el-api</artifactId>
 	 <version>2.2.5</version>
 	</dependency>
-	 <!-- TODO: check this out (querydsl.com)
+	 <!-- TODO: check this out (http://www.querydsl.com/, http://docs.spring.io/spring-data/data-neo4j/docs/3.3.0.RELEASE/reference/html/#cypher_dsl_and_querydsl)
 	 <dependency>
 		 <groupId>com.mysema.querydsl</groupId>
 		 <artifactId>querydsl-core</artifactId>

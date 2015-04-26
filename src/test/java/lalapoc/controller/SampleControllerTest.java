@@ -66,4 +66,10 @@ public class SampleControllerTest {
 		verify( sampleServiceMock, times( 1 ) ).createSampleNode();
 	}
 
+	@Test
+	public void testReadTyped() throws Exception {
+		mvc.perform( MockMvcRequestBuilders.get( "/typed/0" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
+		verify( sampleServiceMock, times( 1 ) ).readTyped( 0L );
+	}
+
 }

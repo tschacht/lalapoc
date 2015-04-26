@@ -14,4 +14,6 @@ public interface SampleServiceMethods {
 
 	SampleNode createSampleNode();
 
+	Collection<SampleNode> readTyped( Long id );
+
 }

@@ -84,4 +84,10 @@ public class SampleControllerIT {
 		assertThat( response.getBody().matches( "(.*pipapo.*){1}" ), is( true ) );
 	}
 
+	@Test
+	public void testReadTyped() throws Exception {
+		ResponseEntity<String> response = template.getForEntity( base.toString() + "typed/0", String.class );
+		assertThat( response.getBody().matches( ".*\"id\"\\s*:\\s*0.*" ), is( true ) );
+	}
+
 }
