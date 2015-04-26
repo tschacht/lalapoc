@@ -14,7 +14,7 @@ public class Name {
 	@GraphId
 	private Long id;
 
-	@Indexed( unique = true, indexType = FULLTEXT, indexName = "search_name" )
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_name")
 	private String name;
 
 	private int people;
@@ -27,7 +27,7 @@ public class Name {
 	//private Set<Need> needs;
 
 	@Fetch
-	@RelatedToVia( type = "ASKS_FOR", direction = Direction.OUTGOING )
+	@RelatedToVia(type = "ASKS_FOR", direction = Direction.OUTGOING)
 	private Collection<Solicitation> solicitations;
 
 	public Long getId() {

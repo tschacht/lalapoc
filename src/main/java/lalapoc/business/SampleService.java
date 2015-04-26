@@ -23,7 +23,7 @@ public class SampleService implements SampleServiceMethods {
 	@Transactional
 	@Fetch
 	public Collection<SampleNode> readSampleNodes() {
-		return Lists.newArrayList(sampleNodeRepository.findAll());
+		return Lists.newArrayList( sampleNodeRepository.findAll() );
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class SampleService implements SampleServiceMethods {
 	@Transactional
 	@Fetch
 	public Collection<SampleNode> readNodesByNumber( Long number ) {
-		return sampleNodeRepository.findByCustomPatternQuery("pipapo_" + number + ".*");
+		return sampleNodeRepository.findByCustomPatternQuery( "pipapo_" + number + ".*" );
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class SampleService implements SampleServiceMethods {
 	@Fetch
 	public SampleNode createSampleNode() {
 		Random r = new Random();
-		SampleNode n = SampleNodeFactory.newSampleNode("pipapo_" + r.nextInt(10) + " - " + Instant.now());
-		return sampleNodeRepository.save(n);
+		SampleNode n = SampleNodeFactory.newSampleNode( "pipapo_" + r.nextInt( 10 ) + " - " + Instant.now() );
+		return sampleNodeRepository.save( n );
 	}
 
 }

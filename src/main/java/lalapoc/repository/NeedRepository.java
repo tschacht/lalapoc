@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface NeedRepository extends GraphRepository<Need> {
 
 	@Fetch
-	@Query( "match (n:Need) where n.description =~ {0} return n" )
+	@Query("match (n:Need) where n.description =~ {0} return n")
 	Collection<Need> findByDescr( String pattern );
 
 }

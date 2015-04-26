@@ -12,7 +12,7 @@ public class SampleNode {
 	@GraphId
 	private Long id;
 
-	@Indexed( unique = true, indexType = FULLTEXT, indexName = "search_sample" )
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_sample")
 	private String name;
 
 	public Long getId() {

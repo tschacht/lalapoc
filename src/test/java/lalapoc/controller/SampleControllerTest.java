@@ -19,8 +19,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith( MockitoJUnitRunner.class )
-@SpringApplicationConfiguration( classes = MockServletContext.class )
+@RunWith(MockitoJUnitRunner.class)
+@SpringApplicationConfiguration(classes = MockServletContext.class)
 @WebAppConfiguration
 public class SampleControllerTest {
 
@@ -34,36 +34,36 @@ public class SampleControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mvc = MockMvcBuilders.standaloneSetup(testling).build();
+		mvc = MockMvcBuilders.standaloneSetup( testling ).build();
 	}
 
 	@Test
 	public void testHome() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.TEXT_HTML)).andExpect(status().isOk());
+		mvc.perform( MockMvcRequestBuilders.get( "/" ).accept( MediaType.TEXT_HTML ) ).andExpect( status().isOk() );
 	}
 
 	@Test
 	public void testReadCustomNodesByQuery() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/custom").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		verify(sampleServiceMock, times(1)).readNodesByCustomQuery();
+		mvc.perform( MockMvcRequestBuilders.get( "/custom" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
+		verify( sampleServiceMock, times( 1 ) ).readNodesByCustomQuery();
 	}
 
 	@Test
 	public void testReadCustomNodesByPatternQuery() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/custom/5").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		verify(sampleServiceMock, times(1)).readNodesByNumber(5L);
+		mvc.perform( MockMvcRequestBuilders.get( "/custom/5" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
+		verify( sampleServiceMock, times( 1 ) ).readNodesByNumber( 5L );
 	}
 
 	@Test
 	public void testReadSampleNodes() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/samples").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		verify(sampleServiceMock, times(1)).readSampleNodes();
+		mvc.perform( MockMvcRequestBuilders.get( "/samples" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
+		verify( sampleServiceMock, times( 1 ) ).readSampleNodes();
 	}
 
 	@Test
 	public void testCreateSampleNode() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.post("/samples").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-		verify(sampleServiceMock, times(1)).createSampleNode();
+		mvc.perform( MockMvcRequestBuilders.post( "/samples" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
+		verify( sampleServiceMock, times( 1 ) ).createSampleNode();
 	}
 
 }

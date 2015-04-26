@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.net.URISyntaxException;
 
 @SpringBootApplication
-@EnableNeo4jRepositories( basePackages = "lalapoc.repository" )
+@EnableNeo4jRepositories(basePackages = "lalapoc.repository")
 @EnableTransactionManagement
 public class LalapocApplication extends Neo4jConfiguration {
 
@@ -34,7 +34,7 @@ public class LalapocApplication extends Neo4jConfiguration {
 	private static final String NEO4J_PASSWORD = "neo4j";
 
 	public LalapocApplication() {
-		setBasePackage("lalapoc.entity");
+		setBasePackage( "lalapoc.entity" );
 	}
 
 	@Bean
@@ -49,11 +49,11 @@ public class LalapocApplication extends Neo4jConfiguration {
 		//System.out.println("###");
 		//return new RestGraphDatabase(NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD);
 		//return new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_EMBEDDED_PATH);
-		return new SpringCypherRestGraphDatabase(NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD);
+		return new SpringCypherRestGraphDatabase( NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD );
 	}
 
 	public static void main( String[] args ) {
-		SpringApplication.run(LalapocApplication.class, args);
+		SpringApplication.run( LalapocApplication.class, args );
 	}
 
 }

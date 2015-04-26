@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface NameRepository extends GraphRepository<Name> {
 
 	@Fetch
-	@Query( "match (n:Name) where n.name =~ {0} return n" )
+	@Query("match (n:Name) where n.name =~ {0} return n")
 	Collection<Name> findByName( String pattern );
 
 }

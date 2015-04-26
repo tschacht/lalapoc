@@ -13,14 +13,14 @@ public class Need {
 	@GraphId
 	private Long id;
 
-	@Indexed( unique = true, indexType = FULLTEXT, indexName = "search_need" )
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_need")
 	private String description;
 
 	//@RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
 	//private Set<Name> requester;
 
 	@Fetch
-	@RelatedToVia( type = "ASKS_FOR", direction = Direction.INCOMING )
+	@RelatedToVia(type = "ASKS_FOR", direction = Direction.INCOMING)
 	private Collection<Solicitation> solicitations;
 
 	public Long getId() {

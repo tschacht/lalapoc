@@ -86,6 +86,32 @@
 	 <artifactId>javax.el-api</artifactId>
 	 <version>2.2.5</version>
 	</dependency>
+	 <!-- TODO: check this out (querydsl.com)
+	 <dependency>
+		 <groupId>com.mysema.querydsl</groupId>
+		 <artifactId>querydsl-core</artifactId>
+		 <version>2.2.3</version>
+		 <optional>true</optional>
+	 </dependency>
+	 <dependency>
+		 <groupId>com.mysema.querydsl</groupId>
+		 <artifactId>querydsl-lucene</artifactId>
+		 <version>2.2.3</version>
+		 <optional>true</optional>
+		 <exclusions>
+			 <exclusion>
+				 <groupId>org.apache.lucene</groupId>
+				 <artifactId>lucene-core</artifactId>
+			 </exclusion>
+		 </exclusions>
+	 </dependency>
+	 <dependency>
+		 <groupId>com.mysema.querydsl</groupId>
+		 <artifactId>querydsl-apt</artifactId>
+		 <version>2.2.3</version>
+		 <scope>provided</scope>
+	 </dependency>
+	 -->
  </dependencies>
 
  <build>

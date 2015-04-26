@@ -19,27 +19,27 @@ public class SampleController {
 	@Inject
 	private SampleServiceMethods sampleService;
 
-	@RequestMapping( value = "/", method = RequestMethod.GET )
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
-		return new ModelAndView("home");
+		return new ModelAndView( "home" );
 	}
 
-	@RequestMapping( value = "/samples", method = RequestMethod.GET )
+	@RequestMapping(value = "/samples", method = RequestMethod.GET)
 	public Iterable<SampleNode> readSampleNodes() {
 		return sampleService.readSampleNodes();
 	}
 
-	@RequestMapping( value = "/custom", method = RequestMethod.GET )
+	@RequestMapping(value = "/custom", method = RequestMethod.GET)
 	public Iterable<SampleNode> readNodesByCustomQuery() {
 		return sampleService.readNodesByCustomQuery();
 	}
 
-	@RequestMapping( value = "/custom/{number}", method = RequestMethod.GET )
+	@RequestMapping(value = "/custom/{number}", method = RequestMethod.GET)
 	public Iterable<SampleNode> readNodesByNumber( @PathVariable long number ) {
-		return sampleService.readNodesByNumber(number);
+		return sampleService.readNodesByNumber( number );
 	}
 
-	@RequestMapping( value = "/samples", method = RequestMethod.POST )
+	@RequestMapping(value = "/samples", method = RequestMethod.POST)
 	public SampleNode createSampleNode() {
 		return sampleService.createSampleNode();
 	}
