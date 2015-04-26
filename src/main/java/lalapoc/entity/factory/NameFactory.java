@@ -1,7 +1,10 @@
 package lalapoc.entity.factory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lalapoc.entity.Name;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.time.LocalTime;
 
 public abstract class NameFactory {
@@ -24,6 +27,16 @@ public abstract class NameFactory {
 		result.setTime( time );
 
 		return result;
+	}
+
+	public static String newNameJson( String name, int people, String position, LocalTime time ) throws IOException {
+		Name result = newName( name, people, position, time );
+
+		StringWriter jsonWriter = new StringWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValue( jsonWriter, result );
+
+		return jsonWriter.toString();
 	}
 
 }

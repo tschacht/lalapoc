@@ -1,10 +1,12 @@
 package lalapoc.entity;
 
+import lalapoc.entity.factory.SolicitationFactory;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.*;
 
 import java.time.LocalTime;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 
@@ -28,7 +30,7 @@ public class Name {
 
 	@Fetch
 	@RelatedToVia(type = "ASKS_FOR", direction = Direction.OUTGOING)
-	private Collection<Solicitation> solicitations;
+	private Set<Solicitation> solicitations;
 
 	public Long getId() {
 		return id;
@@ -68,6 +70,21 @@ public class Name {
 
 	public void setPosition( String position ) {
 		this.position = position;
+	}
+
+	public Set<Solicitation> getSolicitations() {
+		return solicitations;
+	}
+
+	public Solicitation asksFor( Need need, int quantity ) {
+		Solicitation solicitation = SolicitationFactory.newSolicitation( this, quantity, need );
+
+		if( solicitations == null ) {
+			solicitations = new HashSet<>();
+		}
+		solicitations.add( solicitation );
+
+		return solicitation;
 	}
 
 }

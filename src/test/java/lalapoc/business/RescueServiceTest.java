@@ -3,6 +3,7 @@ package lalapoc.business;
 import com.google.common.collect.Lists;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
+import lalapoc.entity.Solicitation;
 import lalapoc.entity.factory.NameFactory;
 import lalapoc.entity.factory.NeedFactory;
 import lalapoc.repository.NameRepository;
@@ -137,4 +138,15 @@ public class RescueServiceTest {
 		verify( needRepositoryMock, times( 1 ) ).findByDescr( ".*water.*" );
 	}
 
+	@Test
+	public void testCreateSolicitation() throws Exception {
+		Solicitation solicitation = testling.createSolicitation( name2, 15, need2 );
+
+		assertThat( solicitation, notNullValue() );
+		assertThat( solicitation.getName(), is( name2 ) );
+		assertThat( solicitation.getQuantity(), is( 15 ) );
+		assertThat( solicitation.getNeed(), is( need2 ) );
+
+		verify( nameRepositoryMock, times( 1 ) ).save( name2 );
+	}
 }

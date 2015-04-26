@@ -39,4 +39,8 @@ public class Need {
 		this.description = description;
 	}
 
+	public Collection<Solicitation> getSolicitations() {
+		return solicitations;
+	}
+
 }

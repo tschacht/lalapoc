@@ -3,6 +3,7 @@ package lalapoc.business;
 import com.google.common.collect.Lists;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
+import lalapoc.entity.Solicitation;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -63,6 +64,18 @@ public class RescueService implements RescueServiceMethods {
 	public Collection<Need> findNeedsByDescr( String descr ) {
 		String pattern = ".*" + descr.trim().toLowerCase() + ".*";
 		return needRepository.findByDescr( pattern );
+	}
+
+	@Override
+	@Transactional
+	@Fetch
+	public Solicitation createSolicitation( Name name, int quantity, Need need ) {
+		// TODO: Name#asksFor vs. RelationshipOperationsRepository#createRelationshipBetween use which?
+		//Solicitation solicitation = nameRepository.createRelationshipBetween( name, need, Solicitation.class, "ASKS_FOR" );
+		Solicitation solicitation = name.asksFor( need, quantity );
+		// TODO: disregard updated Name?
+		Name updatedName = nameRepository.save( name );
+		return solicitation;
 	}
 
 }
