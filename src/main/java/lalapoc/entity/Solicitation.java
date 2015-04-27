@@ -1,15 +1,11 @@
 package lalapoc.entity;
 
 import org.springframework.data.neo4j.annotation.EndNode;
-import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 @RelationshipEntity(type = "ASKS_FOR")
-public class Solicitation {
-
-	@GraphId
-	Long id;
+public class Solicitation extends BaseEntity {
 
 	private int quantity;
 
@@ -18,14 +14,6 @@ public class Solicitation {
 
 	@EndNode
 	private Need need;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId( Long id ) {
-		this.id = id;
-	}
 
 	public int getQuantity() {
 		return quantity;
@@ -49,6 +37,11 @@ public class Solicitation {
 
 	public void setNeed( Need need ) {
 		this.need = need;
+	}
+
+	@Override
+	public boolean equals( Object other ) {
+		return this == other || id != null && other instanceof Solicitation && id.equals( ( (Solicitation) other ).id );
 	}
 
 }

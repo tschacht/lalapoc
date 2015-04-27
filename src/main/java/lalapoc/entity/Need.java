@@ -1,17 +1,17 @@
 package lalapoc.entity;
 
 import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.Indexed;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import java.util.Collection;
 
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 
 @NodeEntity
-public class Need {
-
-	@GraphId
-	private Long id;
+public class Need extends BaseEntity {
 
 	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_need")
 	private String description;
@@ -23,14 +23,6 @@ public class Need {
 	@RelatedToVia(type = "ASKS_FOR", direction = Direction.INCOMING)
 	private Collection<Solicitation> solicitations;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId( Long id ) {
-		this.id = id;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -41,6 +33,11 @@ public class Need {
 
 	public Collection<Solicitation> getSolicitations() {
 		return solicitations;
+	}
+
+	@Override
+	public boolean equals( Object other ) {
+		return this == other || id != null && other instanceof Need && id.equals( ( (Need) other ).id );
 	}
 
 }
