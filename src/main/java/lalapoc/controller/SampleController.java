@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 
-//@RestResource
 @RestController
 @EnableAutoConfiguration
 public class SampleController {

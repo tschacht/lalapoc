@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 
-//@RestResource
 @RestController
 @EnableAutoConfiguration
 public class RescueController {
