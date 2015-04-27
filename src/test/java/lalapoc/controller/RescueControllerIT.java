@@ -65,7 +65,7 @@ public class RescueControllerIT {
 		}
 		Instant end = Instant.now();
 		System.out.println( "\nEND " + end );
-		System.out.println( "took millis: " + (end.toEpochMilli() - begin.toEpochMilli()) );
+		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
 
 		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), "Lost City " + r.nextInt( bound ), null );

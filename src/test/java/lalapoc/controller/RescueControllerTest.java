@@ -57,11 +57,11 @@ public class RescueControllerTest {
 		String jsonContent = NameFactory.newNameJson( "John Doe", 1, "Lost City", null );
 
 		mvc.perform( MockMvcRequestBuilders
-			.post( "/names" )
-			.contentType( MediaType.APPLICATION_JSON )
-			.content( jsonContent )
-			.accept( MediaType.APPLICATION_JSON ) )
-			.andExpect( status().isOk() );
+				.post( "/names" )
+				.contentType( MediaType.APPLICATION_JSON )
+				.content( jsonContent )
+				.accept( MediaType.APPLICATION_JSON ) )
+				.andExpect( status().isOk() );
 
 		verify( rescueServiceMock, times( 1 ) ).createName( any( Name.class ) );
 	}

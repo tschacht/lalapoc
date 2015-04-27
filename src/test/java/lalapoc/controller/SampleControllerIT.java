@@ -77,7 +77,7 @@ public class SampleControllerIT {
 		}
 		Instant end = Instant.now();
 		System.out.println( "\nEND " + end );
-		System.out.println( "took millis: " + (end.toEpochMilli() - begin.toEpochMilli()) );
+		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
 
 		ResponseEntity<String> response = template.postForEntity( base.toString() + "samples", null, String.class );
