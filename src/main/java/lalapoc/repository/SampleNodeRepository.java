@@ -10,7 +10,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.Collection;
 
-@RepositoryRestResource(collectionResourceRel = "rel-samples", path = "rest-samples")
+@RepositoryRestResource(collectionResourceRel = "rest-samples", path = "rest-samples")
 public interface SampleNodeRepository extends GraphRepository<SampleNode>, CypherDslRepository<SampleNode> {
 
 	@Fetch
