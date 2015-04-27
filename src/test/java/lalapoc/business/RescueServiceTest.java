@@ -6,6 +6,7 @@ import lalapoc.entity.Need;
 import lalapoc.entity.Solicitation;
 import lalapoc.entity.factory.NameFactory;
 import lalapoc.entity.factory.NeedFactory;
+import lalapoc.entity.factory.SolicitationFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.neo4j.conversion.QueryResultBuilder;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import java.time.LocalTime;
 import java.util.Collection;
@@ -26,6 +28,9 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RescueServiceTest {
+
+	@Mock
+	private Neo4jTemplate templateMock;
 
 	@Mock
 	private NameRepository nameRepositoryMock;
@@ -140,13 +145,20 @@ public class RescueServiceTest {
 
 	@Test
 	public void testCreateSolicitation() throws Exception {
-		Solicitation solicitation = testling.createSolicitation( name2, 15, need2 );
+		Solicitation createdRelationship = SolicitationFactory.newSolicitation( name2, 0, need2 );
+		when( templateMock.createRelationshipBetween( name2, need2, Solicitation.class, "ASKS_FOR", false ) ).thenReturn( createdRelationship );
+		when( templateMock.save( any( Solicitation.class ) ) ).thenReturn( createdRelationship );
 
-		assertThat( solicitation, notNullValue() );
-		assertThat( solicitation.getName(), is( name2 ) );
-		assertThat( solicitation.getQuantity(), is( 15 ) );
-		assertThat( solicitation.getNeed(), is( need2 ) );
+		Solicitation result = testling.createSolicitation( name2, 15, need2 );
 
-		verify( nameRepositoryMock, times( 1 ) ).save( name2 );
+		assertThat( result, notNullValue() );
+		assertThat( result.getName(), is( name2 ) );
+		assertThat( result.getQuantity(), is( 15 ) );
+		assertThat( result.getNeed(), is( need2 ) );
+
+		//verify( nameRepositoryMock, times( 1 ) ).save( name2 );
+		verify( templateMock, times( 1 ) ).createRelationshipBetween( name2, need2, Solicitation.class, "ASKS_FOR", false );
+		verify( templateMock, times( 1 ) ).save( createdRelationship );
 	}
+
 }

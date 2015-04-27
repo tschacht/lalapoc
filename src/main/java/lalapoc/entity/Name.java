@@ -68,6 +68,13 @@ public class Name extends BaseEntity {
 		return solicitations;
 	}
 
+	/**
+	 * Returns an unattached {@link Solicitation} without populated id-field.
+	 *
+	 * @deprecated One should use NameRepository#createRelationshipBetween(..) instead,
+	 * but its unclear, how one should deal with properties on the @RelationshipEntity.
+	 */
+	@Deprecated
 	public Solicitation asksFor( Need need, int quantity ) {
 		Solicitation solicitation = SolicitationFactory.newSolicitation( this, quantity, need );
 
