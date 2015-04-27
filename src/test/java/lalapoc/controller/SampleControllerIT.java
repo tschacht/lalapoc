@@ -40,8 +40,8 @@ public class SampleControllerIT {
 
 	@Test
 	public void getHome() throws Exception {
-		ResponseEntity<String> response = template.getForEntity( base.toString(), String.class );
-		assertThat( response.getBody(), containsString( "hello form templates/home.ftl" ) );
+		ResponseEntity<String> response = template.getForEntity( base.toString() + "home", String.class );
+		assertThat( response.getBody(), containsString( "hello form templates/home-view.ftl" ) );
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class SampleControllerIT {
 
 	@Test
 	public void testCreateSampleNode() throws Exception {
-		int n = 100;
+		int n = 10;
 		System.out.println( "#####" );
 		System.out.println( "creating n nodes. n=" + n );
 		Instant begin = Instant.now();

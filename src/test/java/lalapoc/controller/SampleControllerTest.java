@@ -39,7 +39,7 @@ public class SampleControllerTest {
 
 	@Test
 	public void testHome() throws Exception {
-		mvc.perform( MockMvcRequestBuilders.get( "/" ).accept( MediaType.TEXT_HTML ) ).andExpect( status().isOk() );
+		mvc.perform( MockMvcRequestBuilders.get( "/home" ).accept( MediaType.TEXT_HTML ) ).andExpect( status().isOk() );
 	}
 
 	@Test

@@ -19,9 +19,9 @@ public class SampleController {
 	@Inject
 	private SampleServiceMethods sampleService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView home() {
-		return new ModelAndView( "home" );
+		return new ModelAndView( "home-view" );
 	}
 
 	@RequestMapping(value = "/samples", method = RequestMethod.GET)
