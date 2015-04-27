@@ -40,8 +40,8 @@ public class SampleServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		SampleNode n1 = SampleNodeFactory.newSampleNode( "N1", 1L );
-		SampleNode n2 = SampleNodeFactory.newSampleNode( "N2", 2L );
+		SampleNode n1 = SampleNodeFactory.newSampleNode( "N1" );
+		SampleNode n2 = SampleNodeFactory.newSampleNode( "N2" );
 
 		when( sampleNodeRepositoryMock.findAll() ).thenReturn( QueryResultBuilder.from( n1, n2 ) );
 		when( sampleNodeRepositoryMock.findByCustomQuery() ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
