@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
-import java.util.Collection;
+import java.util.Set;
 
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 
@@ -21,7 +21,7 @@ public class Need extends BaseEntity {
 
 	@Fetch
 	@RelatedToVia(type = "ASKS_FOR", direction = Direction.INCOMING)
-	private Collection<Solicitation> solicitations;
+	private Set<Solicitation> solicitations;
 
 	public String getDescription() {
 		return description;
@@ -31,7 +31,7 @@ public class Need extends BaseEntity {
 		this.description = description;
 	}
 
-	public Collection<Solicitation> getSolicitations() {
+	public Set<Solicitation> getSolicitations() {
 		return solicitations;
 	}
 
