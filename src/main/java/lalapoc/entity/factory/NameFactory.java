@@ -15,7 +15,7 @@ public abstract class NameFactory {
 
 		result.setName( name );
 		result.setPeople( people );
-		result.setPosition( new Point( lon, lat ) );
+		result.setPosition( new Point( lon, lat ) ); // latitude -> y-axis (vertical), longitude -> x-axis (horizontal)
 		result.setTime( time );
 
 		return result;

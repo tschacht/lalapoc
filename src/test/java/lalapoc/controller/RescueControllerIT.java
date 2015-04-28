@@ -40,7 +40,7 @@ public class RescueControllerIT {
 		final double LON = 13.5;
 		double lat = LAT + ( r.nextInt( 1000 ) / 10000. * ( r.nextBoolean() ? 1. : -1. ) );
 		double lon = LON + ( r.nextInt( 1000 ) / 10000. * ( r.nextBoolean() ? 1. : -1. ) );
-		return new Point( lat, lon );
+		return new Point( lon, lat );
 	}
 
 	@Before
