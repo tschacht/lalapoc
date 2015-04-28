@@ -69,7 +69,7 @@ public class RescueControllerIT {
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
 			Point p = randPos( r );
-			String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getX(), p.getY(), null );
+			String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getY(), p.getX(), null );
 			doPostJson( jsonContent, url );
 			if( i % 5 == 0 ) System.out.print( i + ", " );
 		}
@@ -79,7 +79,8 @@ public class RescueControllerIT {
 		System.out.println( "#####" );
 
 		Point p = randPos( r );
-		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getX(), p.getY(), null );
+		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
+		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getY(), p.getX(), null );
 		//ResponseEntity<String> responseEntity = template.postForEntity( url, jsonContent, String.class );
 		ResponseEntity<String> responseEntity = doPostJson( jsonContent, url );
 		assertThat( responseEntity.getBody().matches( "(.*John Doe.*){1}" ), is( true ) );

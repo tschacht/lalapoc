@@ -68,6 +68,7 @@ public class Name extends BaseEntity {
 	}
 
 	public void setPosition( Point position ) {
+		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
 		//this.wkt = String.format( "POINT( %.4f %.4f )", position.getY(), position.getX() );
 		this.wkt = position;
 	}
