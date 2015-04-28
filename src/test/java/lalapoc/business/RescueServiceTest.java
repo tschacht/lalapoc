@@ -158,7 +158,7 @@ public class RescueServiceTest {
 
 		//verify( nameRepositoryMock, times( 1 ) ).save( name2 );
 		verify( templateMock, times( 1 ) ).createRelationshipBetween( name2, need2, Solicitation.class, "ASKS_FOR", false );
-		verify( templateMock, times( 1 ) ).save( createdRelationship );
+		verify( templateMock, times( 1 ) ).saveOnly( createdRelationship );
 	}
 
 }

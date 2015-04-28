@@ -121,7 +121,9 @@ public class RescueService implements RescueServiceMethods {
 		// inject and use the Neo4jTemplate
 		Solicitation solicitation = template.createRelationshipBetween( name, need, Solicitation.class, "ASKS_FOR", false );
 		solicitation.setQuantity( quantity );
-		return template.save( solicitation );
+		// only save and not reload the entity from the database
+		template.saveOnly( solicitation );
+		return solicitation;
 	}
 
 }

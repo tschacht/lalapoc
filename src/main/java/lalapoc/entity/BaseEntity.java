@@ -13,12 +13,11 @@ public abstract class BaseEntity {
 		return id;
 	}
 
-	// cf. http://docs.spring.io/spring-data/data-neo4j/docs/current/reference/html/#graphid_neo4j_id_field
-
 	public void setId( Long id ) {
 		this.id = id;
 	}
 
+	// cf. http://docs.spring.io/spring-data/data-neo4j/docs/3.3.0.RELEASE/reference/html/#graphid_neo4j_id_field
 	@Override
 	public int hashCode() {
 		if( hash == null ) hash = id == null ? System.identityHashCode( this ) : id.hashCode();
