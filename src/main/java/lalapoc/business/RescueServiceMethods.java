@@ -22,4 +22,6 @@ public interface RescueServiceMethods {
 
 	Solicitation createSolicitation( Name name, int quantity, Need need );
 
+	Collection<Name> findNear( double lat, double lon, double distanceKm );
+
 }

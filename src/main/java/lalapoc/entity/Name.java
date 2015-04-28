@@ -2,6 +2,7 @@ package lalapoc.entity;
 
 import lalapoc.entity.factory.SolicitationFactory;
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -12,18 +13,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
+import static org.springframework.data.neo4j.support.index.IndexType.POINT;
 
 @NodeEntity
 public class Name extends BaseEntity {
 
-	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_name")
+	public static final String INDEX_SEARCH_NAME = "search_name";
+	public static final String INDEX_POSITION = "position";
+
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = INDEX_SEARCH_NAME)
 	private String name;
 
 	private int people;
 
 	private LocalTime time;
 
-	private String position;
+	@Indexed(indexType = POINT, indexName = INDEX_POSITION)
+	//private String wkt; // must be named "wkt"
+	private Point wkt; // must be named "wkt"
 
 	//@RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
 	//private Set<Need> needs;
@@ -56,12 +63,13 @@ public class Name extends BaseEntity {
 		this.time = time;
 	}
 
-	public String getPosition() {
-		return position;
+	public Point getPosition() {
+		return wkt;
 	}
 
-	public void setPosition( String position ) {
-		this.position = position;
+	public void setPosition( Point position ) {
+		//this.wkt = String.format( "POINT( %.4f %.4f )", position.getY(), position.getX() );
+		this.wkt = position;
 	}
 
 	public Set<Solicitation> getSolicitations() {

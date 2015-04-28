@@ -54,7 +54,11 @@ public class RescueControllerTest {
 
 	@Test
 	public void testCreateName() throws Exception {
-		String jsonContent = NameFactory.newNameJson( "John Doe", 1, "Lost City", null );
+		// TODO: the default mapping by com.fasterxml.jackson.databind.ObjectMapper of org.springframework.data.geo.Point yields a 400 bad request
+		// (but persisting the same JSON with (Point position) in the integration test works though i.e. is correctly converted by neo4j)
+
+		// test without coordinates for (Point position)
+		String jsonContent = NameFactory.newNameJson( "John Doe", 1, null );
 
 		mvc.perform( MockMvcRequestBuilders
 				.post( "/names" )

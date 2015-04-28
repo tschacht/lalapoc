@@ -126,4 +126,10 @@ public class RescueService implements RescueServiceMethods {
 		return solicitation;
 	}
 
+	@Override
+	@Fetch
+	public Collection<Name> findNear( double lat, double lon, double distanceKm ) {
+		return Lists.newArrayList( nameRepository.findWithinDistance( Name.INDEX_POSITION, lat, lon, distanceKm ) );
+	}
+
 }

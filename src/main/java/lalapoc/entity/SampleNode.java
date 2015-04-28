@@ -8,7 +8,9 @@ import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 @NodeEntity
 public class SampleNode extends BaseEntity {
 
-	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_sample")
+	public static final String INDEX_SEARCH_SAMPLE = "search_sample";
+
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = INDEX_SEARCH_SAMPLE)
 	private String name;
 
 	public String getName() {

@@ -10,6 +10,7 @@ import lalapoc.entity.factory.SolicitationFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import java.util.Collection;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -62,8 +64,8 @@ public class RescueServiceTest {
 		need2 = NeedFactory.newNeed( "Blanket" );
 		need3 = NeedFactory.newNeed( "Antibiotics" );
 
-		name1 = NameFactory.newName( "Refugee A", 5, "City A", time );
-		name2 = NameFactory.newName( "Refugee B", 10, "City B", time );
+		name1 = NameFactory.newName( "Refugee A", 5, 0, 0, time );
+		name2 = NameFactory.newName( "Refugee B", 10, 0, 0, time );
 
 		// TODO: relations
 
@@ -161,4 +163,10 @@ public class RescueServiceTest {
 		verify( templateMock, times( 1 ) ).saveOnly( createdRelationship );
 	}
 
+	@Ignore
+	@Test
+	public void testFindNear() throws Exception {
+		fail( "TODO: implement this test" );
+		// TODO: implement lalapoc.business.RescueServiceTest.testFindNear
+	}
 }

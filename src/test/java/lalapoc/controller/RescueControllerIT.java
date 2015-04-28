@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.data.geo.Point;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -34,6 +35,14 @@ public class RescueControllerIT {
 	private URL base;
 	private RestTemplate template;
 
+	private static Point randPos( Random r ) {
+		final double LAT = 52.5;
+		final double LON = 13.5;
+		double lat = LAT + ( r.nextInt( 1000 ) / 10000. * ( r.nextBoolean() ? 1. : -1. ) );
+		double lon = LON + ( r.nextInt( 1000 ) / 10000. * ( r.nextBoolean() ? 1. : -1. ) );
+		return new Point( lat, lon );
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		this.base = new URL( "http://localhost:" + port + "/" );
@@ -48,8 +57,9 @@ public class RescueControllerIT {
 
 	@Test
 	public void testCreateName() throws Exception {
-		final int n = 10;
+		final int n = 50;
 		final int bound = 100;
+
 		Random r = new Random();
 		String url = base.toString() + "names";
 
@@ -58,8 +68,8 @@ public class RescueControllerIT {
 		Instant begin = Instant.now();
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
-			String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), "Lost City " + r.nextInt( bound ), null );
-			//template.postForEntity( url, jsonContent, String.class );
+			Point p = randPos( r );
+			String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getX(), p.getY(), null );
 			doPostJson( jsonContent, url );
 			if( i % 5 == 0 ) System.out.print( i + ", " );
 		}
@@ -68,7 +78,8 @@ public class RescueControllerIT {
 		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
 
-		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), "Lost City " + r.nextInt( bound ), null );
+		Point p = randPos( r );
+		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getX(), p.getY(), null );
 		//ResponseEntity<String> responseEntity = template.postForEntity( url, jsonContent, String.class );
 		ResponseEntity<String> responseEntity = doPostJson( jsonContent, url );
 		assertThat( responseEntity.getBody().matches( "(.*John Doe.*){1}" ), is( true ) );

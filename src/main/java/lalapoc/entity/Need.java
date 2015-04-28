@@ -13,7 +13,9 @@ import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 @NodeEntity
 public class Need extends BaseEntity {
 
-	@Indexed(unique = true, indexType = FULLTEXT, indexName = "search_need")
+	public static final String INDEX_SEARCH_NEED = "search_need";
+
+	@Indexed(unique = true, indexType = FULLTEXT, indexName = INDEX_SEARCH_NEED)
 	private String description;
 
 	//@RelatedTo( type = "ASKS_FOR", direction = Direction.INCOMING )
