@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.util.Collections;
@@ -43,6 +44,12 @@ public class RescueControllerIT {
 		return new Point( lon, lat );
 	}
 
+	private static String randNameJSON( Random r ) throws IOException {
+		Point p = randPos( r );
+		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
+		return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), null );
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		this.base = new URL( "http://localhost:" + port + "/" );
@@ -58,19 +65,16 @@ public class RescueControllerIT {
 	@Test
 	public void testCreateName() throws Exception {
 		final int n = 50;
-		final int bound = 100;
 
 		Random r = new Random();
 		String url = base.toString() + "names";
 
 		System.out.println( "#####" );
-		System.out.println( "creating n nodes. n=" + n );
+		System.out.println( "creating n Name nodes. n=" + n );
 		Instant begin = Instant.now();
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
-			Point p = randPos( r );
-			String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getY(), p.getX(), null );
-			doPostJson( jsonContent, url );
+			doPostJson( randNameJSON( r ), url );
 			if( i % 5 == 0 ) System.out.print( i + ", " );
 		}
 		Instant end = Instant.now();
@@ -78,11 +82,8 @@ public class RescueControllerIT {
 		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
 
-		Point p = randPos( r );
-		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
-		String jsonContent = NameFactory.newNameJson( "John Doe " + r.nextInt( bound ), r.nextInt( bound ), p.getY(), p.getX(), null );
 		//ResponseEntity<String> responseEntity = template.postForEntity( url, jsonContent, String.class );
-		ResponseEntity<String> responseEntity = doPostJson( jsonContent, url );
+		ResponseEntity<String> responseEntity = doPostJson( randNameJSON( r ), url );
 		assertThat( responseEntity.getBody().matches( "(.*John Doe.*){1}" ), is( true ) );
 	}
 

@@ -68,7 +68,7 @@ public class SampleControllerIT {
 	public void testCreateSampleNode() throws Exception {
 		int n = 50;
 		System.out.println( "#####" );
-		System.out.println( "creating n nodes. n=" + n );
+		System.out.println( "creating n SampleNodes. n=" + n );
 		Instant begin = Instant.now();
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
