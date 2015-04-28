@@ -14,8 +14,6 @@ import org.neo4j.cypherdsl.grammar.Execute;
 import org.springframework.data.neo4j.conversion.QueryResultBuilder;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -33,8 +31,6 @@ public class SampleServiceTest {
 	@Mock
 	private SampleNode sampleNodeMock;
 
-	private Map<String, Object> params;
-
 	@InjectMocks
 	private SampleService testling;
 
@@ -48,10 +44,7 @@ public class SampleServiceTest {
 		when( sampleNodeRepositoryMock.findByCustomPatternQuery( anyString() ) ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
 		when( sampleNodeRepositoryMock.save( any( SampleNode.class ) ) ).thenReturn( sampleNodeMock );
 
-		params = new HashMap<>();
-		params.put( "id", 0L );
-
-		when( sampleNodeRepositoryMock.query( any( Execute.class ), eq( params ) ) ).thenReturn( QueryResultBuilder.from( sampleNodeMock ) );
+		when( sampleNodeRepositoryMock.query( any( Execute.class ), any() ) ).thenReturn( QueryResultBuilder.from( sampleNodeMock ) );
 	}
 
 	@Test
@@ -98,7 +91,7 @@ public class SampleServiceTest {
 	public void testReadTyped() throws Exception {
 		Collection<SampleNode> result = testling.readTyped( 0L );
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).query( any( Execute.class ), eq( params ) );
+		verify( sampleNodeRepositoryMock, times( 1 ) ).query( any( Execute.class ), any() );
 
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), is( 1 ) );

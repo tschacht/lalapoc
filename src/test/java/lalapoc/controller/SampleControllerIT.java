@@ -66,7 +66,7 @@ public class SampleControllerIT {
 
 	@Test
 	public void testCreateSampleNode() throws Exception {
-		int n = 10;
+		int n = 50;
 		System.out.println( "#####" );
 		System.out.println( "creating n nodes. n=" + n );
 		Instant begin = Instant.now();
@@ -87,7 +87,7 @@ public class SampleControllerIT {
 	@Test
 	public void testReadTyped() throws Exception {
 		ResponseEntity<String> response = template.getForEntity( base.toString() + "typed/0", String.class );
-		assertThat( response.getBody().matches( ".*\"id\"\\s*:\\s*0.*" ), is( true ) );
+		assertThat( response.getBody().matches( "(.*\"name\"\\s*:\\s*\"pipapo_0.*\".*){2,}" ), is( true ) );
 	}
 
 }

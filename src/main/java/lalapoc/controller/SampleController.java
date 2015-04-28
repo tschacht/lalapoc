@@ -41,9 +41,9 @@ public class SampleController {
 		return sampleService.createSampleNode();
 	}
 
-	@RequestMapping(value = "/typed/{id}", method = RequestMethod.GET)
-	public Iterable<SampleNode> readNodesTyped( @PathVariable Long id ) {
-		return sampleService.readTyped( id );
+	@RequestMapping(value = "/typed/{number}", method = RequestMethod.GET)
+	public Iterable<SampleNode> readNodesTyped( @PathVariable Long number ) {
+		return sampleService.readTyped( number );
 	}
 
 }

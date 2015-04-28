@@ -14,8 +14,8 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Random;
 
-import static org.neo4j.cypherdsl.CypherQuery.*;
-import static org.neo4j.helpers.collection.MapUtil.map;
+import static org.neo4j.cypherdsl.CypherQuery.identifier;
+import static org.neo4j.cypherdsl.CypherQuery.start;
 
 @Named
 public class SampleService implements SampleServiceMethods {
@@ -56,7 +56,7 @@ public class SampleService implements SampleServiceMethods {
 	@Override
 	@Transactional
 	@Fetch
-	public Collection<SampleNode> readTyped( Long id ) {
+	public Collection<SampleNode> readTyped( Long number ) {
 		/*
 		examples:
 
@@ -85,8 +85,16 @@ public class SampleService implements SampleServiceMethods {
 
 		List<Product> result = repository.query(query, map("email", dave.getEmailAddress())).as(List.class);
 		 */
-		Execute query = start( nodesById( "n", id ) ).returns( identifier( "n" ) );
-		return Lists.newArrayList( sampleNodeRepository.query( query, map( "id", id ) ) );
+
+		// match (n:SampleNode) where n.name =~ 'pipapo_5.*' return n
+
+		Execute query = start()
+				.match( identifier( "n" ) )
+				.where( identifier( "n" ).property( "name" )
+						.regexp( "pipapo_" + number + ".*" ) )
+				.returns( identifier( "n" ) );
+
+		return Lists.newArrayList( sampleNodeRepository.query( query, null ) );
 	}
 
 }
