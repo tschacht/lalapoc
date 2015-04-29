@@ -30,7 +30,7 @@ public class LalapocNeo4jConfiguration extends Neo4jConfiguration {
 
 	//@Value("${neo4j.password}")
 	//private String NEO4J_PASSWORD;
-	private static final String NEO4J_PASSWORD = "neo4j";
+	private static final String NEO4J_PASSWORD = "neo";
 
 	public LalapocNeo4jConfiguration() {
 		setBasePackage( "lalapoc.entity" );

@@ -30,11 +30,12 @@ import static org.junit.Assert.assertThat;
 @IntegrationTest({ "server.port=0" })
 public class RescueControllerIT {
 
+	private static final RestTemplate template = new TestRestTemplate();
+	private static boolean testDataCreated;
+
 	@Value("${local.server.port}")
 	private int port;
-
 	private URL base;
-	private RestTemplate template;
 
 	private static Point randPos( Random r ) {
 		final double LAT = 52.5;
@@ -50,20 +51,7 @@ public class RescueControllerIT {
 		return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), null );
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		this.base = new URL( "http://localhost:" + port + "/" );
-		template = new TestRestTemplate();
-	}
-
-	@Test
-	public void testReadNames() throws Exception {
-		ResponseEntity<String> response = template.getForEntity( base.toString() + "names", String.class );
-		assertThat( response.getBody().matches( "(.*John Doe.*){2,}" ), is( true ) );
-	}
-
-	@Test
-	public void testCreateName() throws Exception {
+	private void createTestData() throws IOException {
 		final int n = 50;
 
 		Random r = new Random();
@@ -81,8 +69,29 @@ public class RescueControllerIT {
 		System.out.println( "\nEND " + end );
 		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
+	}
 
-		//ResponseEntity<String> responseEntity = template.postForEntity( url, jsonContent, String.class );
+	@Before
+	public void setUp() throws Exception {
+		this.base = new URL( "http://localhost:" + port + "/" );
+
+		if( !testDataCreated ) {
+			createTestData();
+			testDataCreated = true;
+		}
+	}
+
+	@Test
+	public void testReadNames() throws Exception {
+		ResponseEntity<String> response = template.getForEntity( base.toString() + "names", String.class );
+		assertThat( response.getBody().matches( "(.*John Doe.*){2,}" ), is( true ) );
+	}
+
+	@Test
+	public void testCreateName() throws Exception {
+		Random r = new Random();
+		String url = base.toString() + "names";
+
 		ResponseEntity<String> responseEntity = doPostJson( randNameJSON( r ), url );
 		assertThat( responseEntity.getBody().matches( "(.*John Doe.*){1}" ), is( true ) );
 	}

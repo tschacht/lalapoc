@@ -26,16 +26,37 @@ import static org.junit.Assert.assertThat;
 @IntegrationTest({ "server.port=0" })
 public class SampleControllerIT {
 
+	private static final RestTemplate template = new TestRestTemplate();
+	private static boolean testDataCreated;
+
 	@Value("${local.server.port}")
 	private int port;
-
 	private URL base;
-	private RestTemplate template;
+
+	private void createTestData() {
+		int n = 50;
+		System.out.println( "#####" );
+		System.out.println( "creating n SampleNodes. n=" + n );
+		Instant begin = Instant.now();
+		System.out.println( "BEGIN: " + begin );
+		for( int i = 0; i < n; i++ ) {
+			template.postForEntity( base.toString() + "samples", null, String.class );
+			if( i % 5 == 0 ) System.out.print( i + ", " );
+		}
+		Instant end = Instant.now();
+		System.out.println( "\nEND " + end );
+		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
+		System.out.println( "#####" );
+	}
 
 	@Before
 	public void setUp() throws Exception {
 		this.base = new URL( "http://localhost:" + port + "/" );
-		template = new TestRestTemplate();
+
+		if( !testDataCreated ) {
+			createTestData();
+			testDataCreated = true;
+		}
 	}
 
 	@Test
@@ -66,20 +87,6 @@ public class SampleControllerIT {
 
 	@Test
 	public void testCreateSampleNode() throws Exception {
-		int n = 50;
-		System.out.println( "#####" );
-		System.out.println( "creating n SampleNodes. n=" + n );
-		Instant begin = Instant.now();
-		System.out.println( "BEGIN: " + begin );
-		for( int i = 0; i < n; i++ ) {
-			template.postForEntity( base.toString() + "samples", null, String.class );
-			if( i % 5 == 0 ) System.out.print( i + ", " );
-		}
-		Instant end = Instant.now();
-		System.out.println( "\nEND " + end );
-		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
-		System.out.println( "#####" );
-
 		ResponseEntity<String> response = template.postForEntity( base.toString() + "samples", null, String.class );
 		assertThat( response.getBody().matches( "(.*pipapo.*){1}" ), is( true ) );
 	}
