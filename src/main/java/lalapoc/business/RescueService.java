@@ -107,14 +107,14 @@ public class RescueService implements RescueServiceMethods {
 		 * Whereas just saving the role happily creates another relationship with the same type."
 		 */
 
-		// TODO: Solicitation here is unattached i.e. is a non-persisted instance without populated id-field
+		// Solicitation here is unattached i.e. is a non-persisted instance without populated id-field
 		//Solicitation solicitation = name.asksFor( need, quantity );
 		//nameRepository.save( name );
 
 		// delegates to Neo4jTemplate.createRelationshipBetween(..) and Solicitation here should be attached/persisted i.e. carry the populated id-field
 		//Solicitation solicitation = nameRepository.createRelationshipBetween( name, need, Solicitation.class, "ASKS_FOR" );
 		//solicitation.setQuantity( quantity );
-		// TODO: how to persist the changed property?
+		// how to persist the changed property?
 
 		//return solicitation;
 
