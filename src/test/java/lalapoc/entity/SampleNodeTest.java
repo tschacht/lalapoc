@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 // cf. reference: http://docs.spring.io/spring-data/data-neo4j/docs/3.3.0.RELEASE/reference/html/#graphid_neo4j_id_field
@@ -51,15 +51,29 @@ public class SampleNodeTest {
 		// consistency with hashCode()
 		assertThat( sampleNode1WithId.hashCode(), equalTo( sampleNodeWithSameIdAs1.hashCode() ) );
 
-		// not equal to other object with other id
+		// not sure about this - see below
 		assertThat( sampleNode1NoId, not( equalTo( sampleNode1WithId ) ) );
 		assertThat( sampleNode2NoId, not( equalTo( sampleNode2WithId ) ) );
+
+		// not equal to other object with other id
 		assertThat( sampleNode1WithId, not( equalTo( sampleNode2WithId ) ) );
 
 		// completely different objects not equal
 		assertThat( sampleNode1NoId, not( equalTo( sampleNode2WithId ) ) );
 		assertThat( sampleNode2NoId, not( equalTo( sampleNode1WithId ) ) );
 		assertThat( sampleNode1NoId, not( equalTo( sampleNode2NoId ) ) );
+
+		// TODO: example from the reference is a little different and fails this test:
+		/*
+		Studio studio = new Studio("Ghibli")
+		studioRepository.save(studio); // does this populate the id field or not?
+		Studio sameStudio = studioRepository.findOne(studio.id);
+		assertThat(studio, is(equalTo(sameStudio));
+		assertThat(studio.hashCode(), is(not( equalTo( sameStudio.hashCode() ) ));
+		*/
+
+		assertThat( sampleNode1NoId.hashCode(), not( equalTo( sampleNode1WithId.hashCode() ) ) ); // OK
+		assertThat( sampleNode1NoId, equalTo( sampleNode1WithId ) ); // FAIL
 	}
 
 	// quote reference:

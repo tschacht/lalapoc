@@ -9,8 +9,8 @@ import org.junit.Test;
 
 import java.time.LocalTime;
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 public class SolicitationTest {
