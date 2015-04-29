@@ -1,5 +1,6 @@
 package lalapoc.entity;
 
+import com.google.common.annotations.VisibleForTesting;
 import lalapoc.entity.factory.SolicitationFactory;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.geo.Point;
@@ -77,6 +78,11 @@ public class Name extends BaseEntity {
 		return solicitations;
 	}
 
+	@VisibleForTesting
+	void setSolicitations( Set<Solicitation> solicitations ) {
+		this.solicitations = solicitations;
+	}
+
 	/**
 	 * Returns an unattached {@link Solicitation} without populated id-field.
 	 *
@@ -95,9 +101,21 @@ public class Name extends BaseEntity {
 		return solicitation;
 	}
 
+	/*
 	@Override
 	public boolean equals( Object other ) {
 		return this == other || id != null && other instanceof Name && id.equals( ( (Name) other ).id );
 	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() +
+				( name == null ? 0 : name.hashCode() ) +
+				people +
+				( time == null ? 0 : time.hashCode() ) +
+				( wkt == null ? 0 : wkt.hashCode() );
+				//( solicitations == null ? 0 : solicitations.hashCode() );
+	}
+	*/
 
 }

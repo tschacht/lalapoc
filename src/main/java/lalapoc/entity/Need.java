@@ -1,5 +1,6 @@
 package lalapoc.entity;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -37,9 +38,23 @@ public class Need extends BaseEntity {
 		return solicitations;
 	}
 
+	@VisibleForTesting
+	void setSolicitations( Set<Solicitation> solicitations ) {
+		this.solicitations = solicitations;
+	}
+
+	/*
 	@Override
 	public boolean equals( Object other ) {
 		return this == other || id != null && other instanceof Need && id.equals( ( (Need) other ).id );
 	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() +
+				( description == null ? 0 : description.hashCode() );
+				//( solicitations == null ? 0 : solicitations.hashCode() );
+	}
+	*/
 
 }

@@ -21,9 +21,17 @@ public class SampleNode extends BaseEntity {
 		this.name = name;
 	}
 
+	/*
 	@Override
 	public boolean equals( Object other ) {
 		return this == other || id != null && other instanceof SampleNode && id.equals( ( (SampleNode) other ).id );
 	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() +
+				( name == null ? 0 : name.hashCode() );
+	}
+	*/
 
 }
