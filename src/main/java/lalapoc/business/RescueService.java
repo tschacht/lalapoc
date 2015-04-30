@@ -41,14 +41,12 @@ public class RescueService implements RescueServiceMethods {
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<Name> findNames() {
 		return Lists.newArrayList( nameRepository.findAll() );
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<Name> findNamesByName( String name ) {
 		String pattern = ".*" + name.trim().toLowerCase() + ".*";
@@ -56,14 +54,12 @@ public class RescueService implements RescueServiceMethods {
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<Need> findNeeds() {
 		return Lists.newArrayList( needRepository.findAll() );
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<Need> findNeedsByDescr( String descr ) {
 		String pattern = ".*" + descr.trim().toLowerCase() + ".*";

@@ -24,21 +24,18 @@ public class SampleService implements SampleServiceMethods {
 	private SampleNodeRepository sampleNodeRepository;
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<SampleNode> readSampleNodes() {
 		return Lists.newArrayList( sampleNodeRepository.findAll() );
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<SampleNode> readNodesByCustomQuery() {
 		return sampleNodeRepository.findByCustomQuery();
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<SampleNode> readNodesByNumber( Long number ) {
 		return sampleNodeRepository.findByCustomPatternQuery( "pipapo_" + number + ".*" );
@@ -54,7 +51,6 @@ public class SampleService implements SampleServiceMethods {
 	}
 
 	@Override
-	@Transactional
 	@Fetch
 	public Collection<SampleNode> readTyped( Long number ) {
 		/*
