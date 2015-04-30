@@ -39,19 +39,4 @@ public class Solicitation extends BaseEntity {
 		this.need = need;
 	}
 
-	/*
-	@Override
-	public boolean equals( Object other ) {
-		return this == other || id != null && other instanceof Solicitation && id.equals( ( (Solicitation) other ).id );
-	}
-
-	@Override
-	public int hashCode() {
-		return super.hashCode() +
-				( name == null ? 0 : name.hashCode() ) +
-				quantity +
-				( need == null ? 0 : need.hashCode() );
-	}
-	*/
-
 }

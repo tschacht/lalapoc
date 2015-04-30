@@ -12,25 +12,25 @@ import static org.junit.Assert.assertThat;
 // cf. reference: http://docs.spring.io/spring-data/data-neo4j/docs/3.3.0.RELEASE/reference/html/#graphid_neo4j_id_field
 public class SampleNodeTest {
 
-	private SampleNode sampleNode1WithId;
-	private SampleNode sampleNodeWithSameIdAs1;
-	private SampleNode sampleNode2WithId;
+	private SampleNode node_1_Id;
+	private SampleNode node_1b_Id;
+	private SampleNode node_2_Id;
 
-	private SampleNode sampleNode1NoId;
-	private SampleNode sampleNode2NoId;
+	private SampleNode node_1_unattached;
+	private SampleNode node_2_unattached;
 
 	@Before
 	public void before() {
-		sampleNode1NoId = SampleNodeFactory.newSampleNode( "node1" );
-		sampleNode2NoId = SampleNodeFactory.newSampleNode( "node2" );
+		node_1_unattached = SampleNodeFactory.newSampleNode( "node1" );
+		node_2_unattached = SampleNodeFactory.newSampleNode( "node2" );
 
-		sampleNode1WithId = SampleNodeFactory.newSampleNode( "node1" );
-		sampleNode1WithId.setId( 1L );
-		sampleNodeWithSameIdAs1 = SampleNodeFactory.newSampleNode( "same id" );
-		sampleNodeWithSameIdAs1.setId( 1L );
+		node_1_Id = SampleNodeFactory.newSampleNode( "node1" );
+		node_1_Id.setId( 1L );
+		node_1b_Id = SampleNodeFactory.newSampleNode( "node1" );
+		node_1b_Id.setId( 1L );
 
-		sampleNode2WithId = SampleNodeFactory.newSampleNode( "node2" );
-		sampleNode2WithId.setId( 2L );
+		node_2_Id = SampleNodeFactory.newSampleNode( "node2" );
+		node_2_Id.setId( 2L );
 	}
 
 	@Test
@@ -41,39 +41,41 @@ public class SampleNodeTest {
 		// 2. Once an entity is attached, we suggest you rely solely on the id-field for equality.
 
 		// equal to self
-		assertThat( sampleNode1NoId, equalTo( sampleNode1NoId ) );
-		assertThat( sampleNode2NoId, equalTo( sampleNode2NoId ) );
-		assertThat( sampleNode1WithId, equalTo( sampleNode1WithId ) );
-		assertThat( sampleNode2WithId, equalTo( sampleNode2WithId ) );
+		assertThat( node_1_unattached, equalTo( node_1_unattached ) );
+		assertThat( node_2_unattached, equalTo( node_2_unattached ) );
+		assertThat( node_1_Id, equalTo( node_1_Id ) );
+		assertThat( node_2_Id, equalTo( node_2_Id ) );
 
-		// equal to other object with same id but different name property
-		assertThat( sampleNode1WithId, equalTo( sampleNodeWithSameIdAs1 ) );
+		// equal to other object with same id and same properties
+		assertThat( node_1_Id, equalTo( node_1b_Id ) );
 		// consistency with hashCode()
-		assertThat( sampleNode1WithId.hashCode(), equalTo( sampleNodeWithSameIdAs1.hashCode() ) );
-
-		// not sure about this - see below
-		assertThat( sampleNode1NoId, not( equalTo( sampleNode1WithId ) ) );
-		assertThat( sampleNode2NoId, not( equalTo( sampleNode2WithId ) ) );
+		assertThat( node_1_Id.hashCode(), equalTo( node_1b_Id.hashCode() ) );
 
 		// not equal to other object with other id
-		assertThat( sampleNode1WithId, not( equalTo( sampleNode2WithId ) ) );
+		assertThat( node_1_Id, not( equalTo( node_2_Id ) ) );
+		// also not equal to node with same properties but without id
+		assertThat( node_1_unattached, not( equalTo( node_1_Id ) ) );
+		assertThat( node_2_unattached, not( equalTo( node_2_Id ) ) );
 
 		// completely different objects not equal
-		assertThat( sampleNode1NoId, not( equalTo( sampleNode2WithId ) ) );
-		assertThat( sampleNode2NoId, not( equalTo( sampleNode1WithId ) ) );
-		assertThat( sampleNode1NoId, not( equalTo( sampleNode2NoId ) ) );
+		assertThat( node_1_unattached, not( equalTo( node_2_Id ) ) );
+		assertThat( node_2_unattached, not( equalTo( node_1_Id ) ) );
+		assertThat( node_1_unattached, not( equalTo( node_2_unattached ) ) );
+	}
 
-		// TODO: example from the reference is a little different and fails this test:
+	@Test
+	public void testEqualsFollowingReference() throws Exception {
+		// example from the reference:
 		/*
 		Studio studio = new Studio("Ghibli")
-		studioRepository.save(studio); // does this populate the id field or not?
+		studioRepository.save(studio); // this populates the id field of studio
 		Studio sameStudio = studioRepository.findOne(studio.id);
 		assertThat(studio, is(equalTo(sameStudio));
 		assertThat(studio.hashCode(), is(not( equalTo( sameStudio.hashCode() ) ));
 		*/
 
-		assertThat( sampleNode1NoId.hashCode(), not( equalTo( sampleNode1WithId.hashCode() ) ) ); // OK
-		assertThat( sampleNode1NoId, equalTo( sampleNode1WithId ) ); // FAIL
+		assertThat( node_1_Id, equalTo( node_1b_Id ) );
+		assertThat( node_1_Id.hashCode(), not( equalTo( node_1b_Id.hashCode() ) ) );
 	}
 
 	// quote reference:
