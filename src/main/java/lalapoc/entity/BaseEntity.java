@@ -32,6 +32,11 @@ public abstract class BaseEntity {
 		return this == other || id != null && other instanceof BaseEntity && id.equals( ( (BaseEntity) other ).id );
 	}
 
+	// cf. http://docs.spring.io/spring-data/data-neo4j/docs/3.3.0.RELEASE/reference/html/#graphid_neo4j_id_field
+	// A work-around for the problem of un-attached entities having their hashcode change when they get saved is to cache the hashcode.
+	// The hashcode will change next time you load the entity, but at least if you have the entity sitting in a collection,
+	// you will still be able to find it
+
 	@Override
 	public final int hashCode() {
 		if( hash == null ) hash = id == null ? System.identityHashCode( this ) : id.hashCode();
