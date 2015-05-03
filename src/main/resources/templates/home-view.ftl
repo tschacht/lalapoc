@@ -14,6 +14,9 @@
 	<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet'/>
 	<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
 
+<#--geosjson-->
+<#--<script src='/js/node_modules/geojson/geojson.js'></script>-->
+
 	<style>
 		body {
 			margin: 0;
@@ -69,6 +72,24 @@
 	marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
 	circle.bindPopup("I am a circle.");
 	polygon.bindPopup("I am a polygon.");
+
+	// add geojson layer
+	var geojsonLayer = L.geoJson().addTo(map);
+
+	var geojsonFeature = {
+		"type": "Feature",
+		"properties": {
+			"popupContent": "GeoJSON Feature"
+		},
+		"geometry": {
+			"type": "Point",
+			"coordinates": [13.45, 52.5]
+		}
+	};
+
+	geojsonLayer.addData(geojsonFeature);
+	geojsonLayer.bindPopup(geojsonFeature.properties.popupContent);
+
 </script>
 
 <h1>hello form templates/home-view.ftl</h1>
