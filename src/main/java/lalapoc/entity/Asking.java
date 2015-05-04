@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.annotation.RelationshipEntity;
 import org.springframework.data.neo4j.annotation.StartNode;
 
 @RelationshipEntity(type = "ASKS_FOR")
-public class Solicitation extends BaseEntity {
+public class Asking extends BaseEntity {
 
 	private int quantity;
 

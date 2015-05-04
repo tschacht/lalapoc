@@ -24,7 +24,7 @@ public class Need extends BaseEntity {
 
 	@Fetch
 	@RelatedToVia(type = "ASKS_FOR", direction = Direction.INCOMING)
-	private Set<Solicitation> solicitations;
+	private Set<Asking> askings;
 
 	public String getDescription() {
 		return description;
@@ -34,13 +34,13 @@ public class Need extends BaseEntity {
 		this.description = description;
 	}
 
-	public Set<Solicitation> getSolicitations() {
-		return solicitations;
+	public Set<Asking> getAskings() {
+		return askings;
 	}
 
 	@VisibleForTesting
-	void setSolicitations( Set<Solicitation> solicitations ) {
-		this.solicitations = solicitations;
+	void setAskings( Set<Asking> askings ) {
+		this.askings = askings;
 	}
 
 }

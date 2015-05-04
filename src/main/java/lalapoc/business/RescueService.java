@@ -3,7 +3,7 @@ package lalapoc.business;
 import com.google.common.collect.Lists;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
-import lalapoc.entity.Solicitation;
+import lalapoc.entity.Asking;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -69,7 +69,7 @@ public class RescueService implements RescueServiceMethods {
 	@Override
 	@Transactional
 	@Fetch
-	public Solicitation createSolicitation( Name name, int quantity, Need need ) {
+	public Asking createAsking( Name name, int quantity, Need need ) {
 		/*
 		 * Name#asksFor(..) vs. RelationshipOperationsRepository#createRelationshipBetween(..):
 		 *
@@ -103,23 +103,23 @@ public class RescueService implements RescueServiceMethods {
 		 * Whereas just saving the role happily creates another relationship with the same type."
 		 */
 
-		// Solicitation here is unattached i.e. is a non-persisted instance without populated id-field
-		//Solicitation solicitation = name.asksFor( need, quantity );
+		// Asking here is unattached i.e. is a non-persisted instance without populated id-field
+		//Asking asking = name.asksFor( need, quantity );
 		//nameRepository.save( name );
 
-		// delegates to Neo4jTemplate.createRelationshipBetween(..) and Solicitation here should be attached/persisted i.e. carry the populated id-field
-		//Solicitation solicitation = nameRepository.createRelationshipBetween( name, need, Solicitation.class, "ASKS_FOR" );
-		//solicitation.setQuantity( quantity );
+		// delegates to Neo4jTemplate.createRelationshipBetween(..) and Asking here should be attached/persisted i.e. carry the populated id-field
+		//Asking asking = nameRepository.createRelationshipBetween( name, need, Asking.class, "ASKS_FOR" );
+		//asking.setQuantity( quantity );
 		// how to persist the changed property?
 
-		//return solicitation;
+		//return asking;
 
 		// inject and use the Neo4jTemplate
-		Solicitation solicitation = template.createRelationshipBetween( name, need, Solicitation.class, "ASKS_FOR", false );
-		solicitation.setQuantity( quantity );
+		Asking asking = template.createRelationshipBetween( name, need, Asking.class, "ASKS_FOR", false );
+		asking.setQuantity( quantity );
 		// only save and not reload the entity from the database
-		template.saveOnly( solicitation );
-		return solicitation;
+		template.saveOnly( asking );
+		return asking;
 	}
 
 	@Override

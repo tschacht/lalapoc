@@ -1,7 +1,7 @@
 package lalapoc.entity;
 
 import com.google.common.annotations.VisibleForTesting;
-import lalapoc.entity.factory.SolicitationFactory;
+import lalapoc.entity.factory.AskingFactory;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.geo.Point;
 import org.springframework.data.neo4j.annotation.Fetch;
@@ -38,7 +38,7 @@ public class Name extends BaseEntity {
 
 	@Fetch
 	@RelatedToVia(type = "ASKS_FOR", direction = Direction.OUTGOING)
-	private Set<Solicitation> solicitations;
+	private Set<Asking> askings;
 
 	public String getName() {
 		return name;
@@ -74,31 +74,31 @@ public class Name extends BaseEntity {
 		this.wkt = position;
 	}
 
-	public Set<Solicitation> getSolicitations() {
-		return solicitations;
+	public Set<Asking> getAskings() {
+		return askings;
 	}
 
 	@VisibleForTesting
-	void setSolicitations( Set<Solicitation> solicitations ) {
-		this.solicitations = solicitations;
+	void setAskings( Set<Asking> askings ) {
+		this.askings = askings;
 	}
 
 	/**
-	 * Returns an unattached {@link Solicitation} without populated id-field.
+	 * Returns an unattached {@link Asking} without populated id-field.
 	 *
 	 * @deprecated One should use NameRepository#createRelationshipBetween(..) instead,
 	 * but its unclear, how one should deal with properties on the @RelationshipEntity.
 	 */
 	@Deprecated
-	public Solicitation asksFor( Need need, int quantity ) {
-		Solicitation solicitation = SolicitationFactory.newSolicitation( this, quantity, need );
+	public Asking asksFor( Need need, int quantity ) {
+		Asking asking = AskingFactory.newAsking( this, quantity, need );
 
-		if( solicitations == null ) {
-			solicitations = new HashSet<>();
+		if( askings == null ) {
+			askings = new HashSet<>();
 		}
-		solicitations.add( solicitation );
+		askings.add( asking );
 
-		return solicitation;
+		return asking;
 	}
 
 }

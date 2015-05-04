@@ -3,10 +3,10 @@ package lalapoc.business;
 import com.google.common.collect.Lists;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
-import lalapoc.entity.Solicitation;
+import lalapoc.entity.Asking;
 import lalapoc.entity.factory.NameFactory;
 import lalapoc.entity.factory.NeedFactory;
-import lalapoc.entity.factory.SolicitationFactory;
+import lalapoc.entity.factory.AskingFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.junit.Before;
@@ -144,19 +144,19 @@ public class RescueServiceTest {
 	}
 
 	@Test
-	public void testCreateSolicitation() throws Exception {
-		Solicitation createdRelationship = SolicitationFactory.newSolicitation( name2, 0, need2 );
-		when( templateMock.createRelationshipBetween( name2, need2, Solicitation.class, "ASKS_FOR", false ) ).thenReturn( createdRelationship );
-		when( templateMock.save( any( Solicitation.class ) ) ).thenReturn( createdRelationship );
+	public void testCreateAsking() throws Exception {
+		Asking createdRelationship = AskingFactory.newAsking( name2, 0, need2 );
+		when( templateMock.createRelationshipBetween( name2, need2, Asking.class, "ASKS_FOR", false ) ).thenReturn( createdRelationship );
+		when( templateMock.save( any( Asking.class ) ) ).thenReturn( createdRelationship );
 
-		Solicitation result = testling.createSolicitation( name2, 15, need2 );
+		Asking result = testling.createAsking( name2, 15, need2 );
 
 		assertThat( result, notNullValue() );
 		assertThat( result.getName(), is( name2 ) );
 		assertThat( result.getQuantity(), is( 15 ) );
 		assertThat( result.getNeed(), is( need2 ) );
 
-		verify( templateMock, times( 1 ) ).createRelationshipBetween( name2, need2, Solicitation.class, "ASKS_FOR", false );
+		verify( templateMock, times( 1 ) ).createRelationshipBetween( name2, need2, Asking.class, "ASKS_FOR", false );
 		verify( templateMock, times( 1 ) ).saveOnly( createdRelationship );
 	}
 

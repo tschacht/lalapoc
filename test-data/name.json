@@ -10,7 +10,7 @@
 			"nano" : 353000000
 		},
 		"position" : "Lost City",
-		"solicitations" : null
+		"askings" : null
 	},
 	{
 		"id" : null,
@@ -18,6 +18,6 @@
 		"people" : 1,
 		"time" : null,
 		"position" : "Lost City",
-		"solicitations" : null
+		"askings" : null
 	}
 ]
