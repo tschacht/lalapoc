@@ -24,7 +24,7 @@ public class NameRepositoryIT {
 	private NameRepository testling;
 
 	@Test
-	public void testPersistWithLocalTime() throws Exception {
+	public void testPersistWithZonedDateTime() throws Exception {
 		Name name = NameFactory.newName( "Time Test", 3, 0, 0, ZonedDateTime.now() );
 		testling.saveOnly( name );
 
