@@ -15,7 +15,7 @@ import javax.inject.Named;
 import java.util.Collection;
 
 @Named
-public class RescueService implements RescueServiceMethods {
+public class AllocationService implements AllocationServiceMethods {
 
 	@Inject
 	private Neo4jTemplate template;

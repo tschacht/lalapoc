@@ -6,7 +6,7 @@ import lalapoc.entity.Asking;
 
 import java.util.Collection;
 
-public interface RescueServiceMethods {
+public interface AllocationServiceMethods {
 
 	Name createName( Name name );
 

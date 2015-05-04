@@ -28,7 +28,7 @@ import static org.junit.Assert.assertThat;
 @SpringApplicationConfiguration(classes = LalapocApplication.class)
 @WebAppConfiguration
 @IntegrationTest({ "server.port=0" })
-public class RescueControllerIT {
+public class AllocationControllerIT {
 
 	private static final RestTemplate template = new TestRestTemplate();
 	private static boolean testDataCreated;

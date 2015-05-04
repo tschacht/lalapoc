@@ -27,7 +27,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RescueServiceTest {
+public class AllocationServiceTest {
 
 	@Mock
 	private Neo4jTemplate templateMock;
@@ -52,7 +52,7 @@ public class RescueServiceTest {
 	private Name name2;
 
 	@InjectMocks
-	private RescueService testling;
+	private AllocationService testling;
 
 	@Before
 	public void setUp() throws Exception {

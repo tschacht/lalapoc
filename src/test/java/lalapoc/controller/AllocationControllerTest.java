@@ -1,6 +1,6 @@
 package lalapoc.controller;
 
-import lalapoc.business.RescueService;
+import lalapoc.business.AllocationService;
 import lalapoc.entity.Name;
 import lalapoc.entity.factory.NameFactory;
 import org.junit.Before;
@@ -25,15 +25,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 @SpringApplicationConfiguration(classes = MockServletContext.class)
 @WebAppConfiguration
-public class RescueControllerTest {
+public class AllocationControllerTest {
 
 	private MockMvc mvc;
 
 	@Mock
-	private RescueService rescueServiceMock;
+	private AllocationService allocationServiceMock;
 
 	@InjectMocks
-	private RescueController testling;
+	private AllocationController testling;
 
 	@Before
 	public void setUp() throws Exception {
@@ -43,13 +43,13 @@ public class RescueControllerTest {
 	@Test
 	public void testReadNames() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.get( "/names" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( rescueServiceMock, times( 1 ) ).findNames();
+		verify( allocationServiceMock, times( 1 ) ).findNames();
 	}
 
 	@Test
 	public void testReadNeeds() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.get( "/needs" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( rescueServiceMock, times( 1 ) ).findNeeds();
+		verify( allocationServiceMock, times( 1 ) ).findNeeds();
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class RescueControllerTest {
 				.accept( MediaType.APPLICATION_JSON ) )
 				.andExpect( status().isOk() );
 
-		verify( rescueServiceMock, times( 1 ) ).createName( any( Name.class ) );
+		verify( allocationServiceMock, times( 1 ) ).createName( any( Name.class ) );
 	}
 
 }
