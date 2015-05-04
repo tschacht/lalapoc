@@ -1,9 +1,9 @@
 package lalapoc.business;
 
 import com.google.common.collect.Lists;
-import lalapoc.entity.SampleNode;
-import lalapoc.entity.factory.SampleNodeFactory;
-import lalapoc.repository.SampleNodeRepository;
+import lalapoc.entity.Sample;
+import lalapoc.entity.factory.SampleFactory;
+import lalapoc.repository.SampleRepository;
 import org.neo4j.cypherdsl.grammar.Execute;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,38 +21,38 @@ import static org.neo4j.cypherdsl.CypherQuery.start;
 public class SampleService implements SampleServiceMethods {
 
 	@Inject
-	private SampleNodeRepository sampleNodeRepository;
+	private SampleRepository sampleRepository;
 
 	@Override
 	@Fetch
-	public Collection<SampleNode> readSampleNodes() {
-		return Lists.newArrayList( sampleNodeRepository.findAll() );
+	public Collection<Sample> readSamples() {
+		return Lists.newArrayList( sampleRepository.findAll() );
 	}
 
 	@Override
 	@Fetch
-	public Collection<SampleNode> readNodesByCustomQuery() {
-		return sampleNodeRepository.findByCustomQuery();
+	public Collection<Sample> readSamplesByCustomQuery() {
+		return sampleRepository.findByCustomQuery();
 	}
 
 	@Override
 	@Fetch
-	public Collection<SampleNode> readNodesByNumber( Long number ) {
-		return sampleNodeRepository.findByCustomPatternQuery( "pipapo_" + number + ".*" );
+	public Collection<Sample> readSamplesByNumber( Long number ) {
+		return sampleRepository.findByCustomPatternQuery( "pipapo_" + number + ".*" );
 	}
 
 	@Override
 	@Transactional
 	@Fetch
-	public SampleNode createSampleNode() {
+	public Sample createSample() {
 		Random r = new Random();
-		SampleNode n = SampleNodeFactory.newSampleNode( "pipapo_" + r.nextInt( 10 ) + " - " + Instant.now() );
-		return sampleNodeRepository.save( n );
+		Sample 	s = SampleFactory.newSample( "pipapo_" + r.nextInt( 10 ) + " - " + Instant.now() );
+		return sampleRepository.save( s );
 	}
 
 	@Override
 	@Fetch
-	public Collection<SampleNode> readTyped( Long number ) {
+	public Collection<Sample> readTyped( Long number ) {
 		/*
 		examples:
 
@@ -82,15 +82,15 @@ public class SampleService implements SampleServiceMethods {
 		List<Product> result = repository.query(query, map("email", dave.getEmailAddress())).as(List.class);
 		 */
 
-		// match (n:SampleNode) where n.name =~ 'pipapo_5.*' return n
+		// match (s:Sample) where s.name =~ 'pipapo_5.*' return s
 
 		Execute query = start()
-				.match( identifier( "n" ) )
-				.where( identifier( "n" ).property( "name" )
+				.match( identifier( "s" ) )
+				.where( identifier( "s" ).property( "name" )
 						.regexp( "pipapo_" + number + ".*" ) )
-				.returns( identifier( "n" ) );
+				.returns( identifier( "s" ) );
 
-		return Lists.newArrayList( sampleNodeRepository.query( query, null ) );
+		return Lists.newArrayList( sampleRepository.query( query, null ) );
 	}
 
 }

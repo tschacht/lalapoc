@@ -1,19 +1,19 @@
 package lalapoc.business;
 
-import lalapoc.entity.SampleNode;
+import lalapoc.entity.Sample;
 
 import java.util.Collection;
 
 public interface SampleServiceMethods {
 
-	Collection<SampleNode> readSampleNodes();
+	Collection<Sample> readSamples();
 
-	Collection<SampleNode> readNodesByCustomQuery();
+	Collection<Sample> readSamplesByCustomQuery();
 
-	Collection<SampleNode> readNodesByNumber( Long number );
+	Collection<Sample> readSamplesByNumber( Long number );
 
-	SampleNode createSampleNode();
+	Sample createSample();
 
-	Collection<SampleNode> readTyped( Long number );
+	Collection<Sample> readTyped( Long number );
 
 }

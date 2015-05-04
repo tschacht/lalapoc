@@ -1,9 +1,9 @@
 package lalapoc.business;
 
 import lalapoc.LalapocApplication;
-import lalapoc.entity.SampleNode;
-import lalapoc.entity.factory.SampleNodeFactory;
-import lalapoc.repository.SampleNodeRepository;
+import lalapoc.entity.Sample;
+import lalapoc.entity.factory.SampleFactory;
+import lalapoc.repository.SampleRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -17,10 +17,10 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LalapocApplication.class)
-public class SampleNodeRepositoryIT {
+public class SampleRepositoryIT {
 
 	@Inject
-	private SampleNodeRepository testling;
+	private SampleRepository testling;
 
 	@Test
 	public void testEqualsFollowingReference() throws Exception {
@@ -33,14 +33,14 @@ public class SampleNodeRepositoryIT {
 		assertThat(studio.hashCode(), is(not( equalTo( sameStudio.hashCode() ) ));
 		*/
 
-		SampleNode node = SampleNodeFactory.newSampleNode( "node" );
+		Sample sample = SampleFactory.newSample( "sample" );
 
-		testling.save( node );
+		testling.save( sample );
 
-		SampleNode sameNode = testling.findOne( node.getId() );
+		Sample sameSample = testling.findOne( sample.getId() );
 
-		assertThat( node, equalTo( sameNode ) );
-		assertThat( node.hashCode(), not( equalTo( sameNode.hashCode() ) ) );
+		assertThat( sample, equalTo( sameSample ) );
+		assertThat( sample.hashCode(), not( equalTo( sameSample.hashCode() ) ) );
 	}
 
 }

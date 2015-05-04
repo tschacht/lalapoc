@@ -43,27 +43,27 @@ public class SampleControllerTest {
 	}
 
 	@Test
-	public void testReadCustomNodesByQuery() throws Exception {
+	public void testReadSamplesByQuery() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.get( "/custom" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( sampleServiceMock, times( 1 ) ).readNodesByCustomQuery();
+		verify( sampleServiceMock, times( 1 ) ).readSamplesByCustomQuery();
 	}
 
 	@Test
-	public void testReadCustomNodesByPatternQuery() throws Exception {
+	public void testReadSamplesByPatternQuery() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.get( "/custom/5" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( sampleServiceMock, times( 1 ) ).readNodesByNumber( 5L );
+		verify( sampleServiceMock, times( 1 ) ).readSamplesByNumber( 5L );
 	}
 
 	@Test
-	public void testReadSampleNodes() throws Exception {
+	public void testReadSamples() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.get( "/samples" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( sampleServiceMock, times( 1 ) ).readSampleNodes();
+		verify( sampleServiceMock, times( 1 ) ).readSamples();
 	}
 
 	@Test
-	public void testCreateSampleNode() throws Exception {
+	public void testCreateSample() throws Exception {
 		mvc.perform( MockMvcRequestBuilders.post( "/samples" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() );
-		verify( sampleServiceMock, times( 1 ) ).createSampleNode();
+		verify( sampleServiceMock, times( 1 ) ).createSample();
 	}
 
 	@Test

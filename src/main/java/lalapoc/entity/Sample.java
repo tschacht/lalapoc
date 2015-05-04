@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import static org.springframework.data.neo4j.support.index.IndexType.FULLTEXT;
 
 @NodeEntity
-public class SampleNode extends BaseEntity {
+public class Sample extends BaseEntity {
 
 	public static final String INDEX_SEARCH_SAMPLE = "search_sample";
 

@@ -36,7 +36,7 @@ public class SampleControllerIT {
 	private void createTestData() {
 		int n = 50;
 		System.out.println( "#####" );
-		System.out.println( "creating n SampleNodes. n=" + n );
+		System.out.println( "creating n Samples. n=" + n );
 		Instant begin = Instant.now();
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
@@ -66,13 +66,13 @@ public class SampleControllerIT {
 	}
 
 	@Test
-	public void testReadCustomNodesByQuery() throws Exception {
+	public void testReadSamplesByQuery() throws Exception {
 		ResponseEntity<String> response = template.getForEntity( base.toString() + "custom", String.class );
 		assertThat( response.getBody().matches( "(.*pipapo.*){2,}" ), is( true ) );
 	}
 
 	@Test
-	public void testReadCustomNodesByPatternQuery() throws Exception {
+	public void testReadSamplesByPatternQuery() throws Exception {
 		ResponseEntity<String> response = template.getForEntity( base.toString() + "custom/5", String.class );
 		assertThat( response.getBody().matches( "(.*pipapo_5.*){2,}" ), is( true ) );
 		assertThat( response.getBody().matches( "(.*pipapo_2.*)" ), is( false ) );
@@ -80,13 +80,13 @@ public class SampleControllerIT {
 	}
 
 	@Test
-	public void testReadSampleNodes() throws Exception {
+	public void testReadSamples() throws Exception {
 		ResponseEntity<String> response = template.getForEntity( base.toString() + "samples", String.class );
 		assertThat( response.getBody().matches( "(.*pipapo.*){2,}" ), is( true ) );
 	}
 
 	@Test
-	public void testCreateSampleNode() throws Exception {
+	public void testCreateSample() throws Exception {
 		ResponseEntity<String> response = template.postForEntity( base.toString() + "samples", null, String.class );
 		assertThat( response.getBody().matches( "(.*pipapo.*){1}" ), is( true ) );
 	}

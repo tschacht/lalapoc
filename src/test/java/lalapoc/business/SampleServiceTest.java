@@ -1,9 +1,9 @@
 package lalapoc.business;
 
 import com.google.common.collect.Lists;
-import lalapoc.entity.SampleNode;
-import lalapoc.entity.factory.SampleNodeFactory;
-import lalapoc.repository.SampleNodeRepository;
+import lalapoc.entity.Sample;
+import lalapoc.entity.factory.SampleFactory;
+import lalapoc.repository.SampleRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,52 +26,52 @@ import static org.mockito.Mockito.*;
 public class SampleServiceTest {
 
 	@Mock
-	private SampleNodeRepository sampleNodeRepositoryMock;
+	private SampleRepository sampleRepositoryMock;
 
 	@Mock
-	private SampleNode sampleNodeMock;
+	private Sample sampleMock;
 
 	@InjectMocks
 	private SampleService testling;
 
 	@Before
 	public void setUp() throws Exception {
-		SampleNode n1 = SampleNodeFactory.newSampleNode( "N1" );
-		SampleNode n2 = SampleNodeFactory.newSampleNode( "N2" );
+		Sample n1 = SampleFactory.newSample( "N1" );
+		Sample n2 = SampleFactory.newSample( "N2" );
 
-		when( sampleNodeRepositoryMock.findAll() ).thenReturn( QueryResultBuilder.from( n1, n2 ) );
-		when( sampleNodeRepositoryMock.findByCustomQuery() ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
-		when( sampleNodeRepositoryMock.findByCustomPatternQuery( anyString() ) ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
-		when( sampleNodeRepositoryMock.save( any( SampleNode.class ) ) ).thenReturn( sampleNodeMock );
+		when( sampleRepositoryMock.findAll() ).thenReturn( QueryResultBuilder.from( n1, n2 ) );
+		when( sampleRepositoryMock.findByCustomQuery() ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
+		when( sampleRepositoryMock.findByCustomPatternQuery( anyString() ) ).thenReturn( Lists.newArrayList( QueryResultBuilder.from( n1, n2 ) ) );
+		when( sampleRepositoryMock.save( any( Sample.class ) ) ).thenReturn( sampleMock );
 
-		when( sampleNodeRepositoryMock.query( any( Execute.class ), any() ) ).thenReturn( QueryResultBuilder.from( sampleNodeMock ) );
+		when( sampleRepositoryMock.query( any( Execute.class ), any() ) ).thenReturn( QueryResultBuilder.from( sampleMock ) );
 	}
 
 	@Test
-	public void testReadSampleNodes() throws Exception {
-		Collection<SampleNode> result = testling.readSampleNodes();
+	public void testReadSamples() throws Exception {
+		Collection<Sample> result = testling.readSamples();
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).findAll();
+		verify( sampleRepositoryMock, times( 1 ) ).findAll();
 
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), is( 2 ) );
 	}
 
 	@Test
-	public void testReadNodesByCustomQuery() throws Exception {
-		Collection<SampleNode> result = testling.readNodesByCustomQuery();
+	public void testReadSamplesByCustomQuery() throws Exception {
+		Collection<Sample> result = testling.readSamplesByCustomQuery();
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).findByCustomQuery();
+		verify( sampleRepositoryMock, times( 1 ) ).findByCustomQuery();
 
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), is( 2 ) );
 	}
 
 	@Test
-	public void testReadNodesByNumber() throws Exception {
-		Collection<SampleNode> result = testling.readNodesByNumber( 2L );
+	public void testReadSamplesByNumber() throws Exception {
+		Collection<Sample> result = testling.readSamplesByNumber( 2L );
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).findByCustomPatternQuery( "pipapo_2.*" );
+		verify( sampleRepositoryMock, times( 1 ) ).findByCustomPatternQuery( "pipapo_2.*" );
 
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), is( 2 ) );
@@ -79,23 +79,23 @@ public class SampleServiceTest {
 	}
 
 	@Test
-	public void testCreateSampleNode() throws Exception {
-		SampleNode n = testling.createSampleNode();
+	public void testCreateSample() throws Exception {
+		Sample s = testling.createSample();
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).save( any( SampleNode.class ) );
+		verify( sampleRepositoryMock, times( 1 ) ).save( any( Sample.class ) );
 
-		assertThat( n, is( sampleNodeMock ) );
+		assertThat( s, is( sampleMock ) );
 	}
 
 	@Test
 	public void testReadTyped() throws Exception {
-		Collection<SampleNode> result = testling.readTyped( 0L );
+		Collection<Sample> result = testling.readTyped( 0L );
 
-		verify( sampleNodeRepositoryMock, times( 1 ) ).query( any( Execute.class ), any() );
+		verify( sampleRepositoryMock, times( 1 ) ).query( any( Execute.class ), any() );
 
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), is( 1 ) );
-		assertThat( result.iterator().next(), is( sampleNodeMock ) );
+		assertThat( result.iterator().next(), is( sampleMock ) );
 	}
 
 }

@@ -58,7 +58,7 @@ public class AllocationControllerIT {
 		String url = base.toString() + "names";
 
 		System.out.println( "#####" );
-		System.out.println( "creating n Name nodes. n=" + n );
+		System.out.println( "creating n Names. n=" + n );
 		Instant begin = Instant.now();
 		System.out.println( "BEGIN: " + begin );
 		for( int i = 0; i < n; i++ ) {
