@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Random;
 
@@ -48,7 +49,7 @@ public class AllocationControllerIT {
 	private static String randNameJSON( Random r ) throws IOException {
 		Point p = randPos( r );
 		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
-		return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), null );
+		return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), ZonedDateTime.now() );
 	}
 
 	private void createTestData() throws IOException {

@@ -1,8 +1,12 @@
 package lalapoc;
 
+import lalapoc.entity.convert.LalapocJsr310Converters;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.converter.ConverterRegistry;
 import org.springframework.data.neo4j.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.config.Neo4jConfiguration;
 import org.springframework.data.neo4j.rest.SpringCypherRestGraphDatabase;
@@ -44,6 +48,18 @@ public class LalapocNeo4jConfiguration extends Neo4jConfiguration {
 		//return new RestGraphDatabase(NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD);
 		//return new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_EMBEDDED_PATH);
 		return new SpringCypherRestGraphDatabase( NEO4J_REST_URL, NEO4J_USER, NEO4J_PASSWORD );
+	}
+
+	@Bean
+	protected ConversionService neo4jConversionService() throws Exception {
+		ConversionService conversionService = super.neo4jConversionService();
+		ConverterRegistry registry = (ConverterRegistry) conversionService;
+
+		for( Converter c : LalapocJsr310Converters.getConvertersToRegister() ) {
+			registry.addConverter( c );
+		}
+
+		return conversionService;
 	}
 
 }

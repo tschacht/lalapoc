@@ -9,7 +9,8 @@ import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
 
-import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class Name extends BaseEntity {
 
 	private int people;
 
-	private LocalTime time;
+	private ZonedDateTime time;
 
 	@Indexed(indexType = POINT, indexName = INDEX_POSITION)
 	//private String wkt; // must be named "wkt"
@@ -56,12 +57,13 @@ public class Name extends BaseEntity {
 		this.people = people;
 	}
 
-	public LocalTime getTime() {
+	public ZonedDateTime getTime() {
 		return time;
 	}
 
-	public void setTime( LocalTime time ) {
-		this.time = time;
+	public void setTime( ZonedDateTime time ) {
+		// convert to GMT
+		this.time = time == null ? null : ZonedDateTime.ofInstant( time.toInstant(), ZoneId.of( "GMT" ) );
 	}
 
 	public Point getPosition() {

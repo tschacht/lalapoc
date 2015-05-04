@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.ZonedDateTime;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -58,7 +60,7 @@ public class AllocationControllerTest {
 		// (but persisting the same JSON with (Point position) in the integration test works though i.e. is correctly converted by neo4j)
 
 		// test without coordinates for (Point position)
-		String jsonContent = NameFactory.newNameJson( "John Doe", 1, null );
+		String jsonContent = NameFactory.newNameJson( "John Doe", 1, ZonedDateTime.now() );
 
 		mvc.perform( MockMvcRequestBuilders
 				.post( "/names" )

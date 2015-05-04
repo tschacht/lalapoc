@@ -1,16 +1,23 @@
 package lalapoc.entity.factory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 import lalapoc.entity.Name;
 import org.springframework.data.geo.Point;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 
 public abstract class NameFactory {
 
-	public static Name newName( String name, int people, double lat, double lon, LocalTime time ) {
+	private static final ObjectMapper mapper = new ObjectMapper();
+
+	static {
+		mapper.registerModule( new JSR310Module() );
+	}
+
+	public static Name newName( String name, int people, double lat, double lon, ZonedDateTime time ) {
 		Name result = new Name();
 
 		result.setName( name );
@@ -21,22 +28,20 @@ public abstract class NameFactory {
 		return result;
 	}
 
-	public static String newNameJson( String name, int people, double lat, double lon, LocalTime time ) throws IOException {
+	public static String newNameJson( String name, int people, double lat, double lon, ZonedDateTime time ) throws IOException {
 		Name result = newName( name, people, lat, lon, time );
 
 		StringWriter jsonWriter = new StringWriter();
-		ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue( jsonWriter, result );
 
 		return jsonWriter.toString();
 	}
 
-	public static String newNameJson( String name, int people, LocalTime time ) throws IOException {
+	public static String newNameJson( String name, int people, ZonedDateTime time ) throws IOException {
 		Name result = newName( name, people, 0, 0, time );
 		result.setPosition( null );
 
 		StringWriter jsonWriter = new StringWriter();
-		ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValue( jsonWriter, result );
 
 		return jsonWriter.toString();

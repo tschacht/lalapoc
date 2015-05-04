@@ -146,6 +146,10 @@
 			<!--<version>0.14-neo4j-2.2.0</version>-->
 			<version>0.13-neo4j-2.1.8</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

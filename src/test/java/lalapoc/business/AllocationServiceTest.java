@@ -1,12 +1,12 @@
 package lalapoc.business;
 
 import com.google.common.collect.Lists;
+import lalapoc.entity.Asking;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
-import lalapoc.entity.Asking;
+import lalapoc.entity.factory.AskingFactory;
 import lalapoc.entity.factory.NameFactory;
 import lalapoc.entity.factory.NeedFactory;
-import lalapoc.entity.factory.AskingFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
 import org.junit.Before;
@@ -18,7 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.neo4j.conversion.QueryResultBuilder;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 
-import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 
 import static org.hamcrest.Matchers.is;
@@ -44,7 +44,7 @@ public class AllocationServiceTest {
 	@Mock
 	private Need needMock;
 
-	private LocalTime time;
+	private ZonedDateTime time;
 	private Need need1;
 	private Need need2;
 	private Need need3;
@@ -56,7 +56,7 @@ public class AllocationServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		time = LocalTime.now();
+		time = ZonedDateTime.now();
 
 		need1 = NeedFactory.newNeed( "Water 1l" );
 		need2 = NeedFactory.newNeed( "Blanket" );
