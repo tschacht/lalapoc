@@ -28,21 +28,21 @@ public abstract class NameFactory {
 		return result;
 	}
 
-	public static String newNameJson( String name, int people, double lat, double lon, ZonedDateTime time ) throws IOException {
-		Name result = newName( name, people, lat, lon, time );
+	public static String newNameJson( String nameStr, int people, double lat, double lon, ZonedDateTime time ) throws IOException {
+		Name name = newName( nameStr, people, lat, lon, time );
 
 		StringWriter jsonWriter = new StringWriter();
-		mapper.writeValue( jsonWriter, result );
+		mapper.writeValue( jsonWriter, name );
 
 		return jsonWriter.toString();
 	}
 
-	public static String newNameJson( String name, int people, ZonedDateTime time ) throws IOException {
-		Name result = newName( name, people, 0, 0, time );
-		result.setPosition( null );
+	public static String newNameJson( String nameStr, int people, ZonedDateTime time ) throws IOException {
+		Name name = newName( nameStr, people, 0, 0, time );
+		name.setPosition( null );
 
 		StringWriter jsonWriter = new StringWriter();
-		mapper.writeValue( jsonWriter, result );
+		mapper.writeValue( jsonWriter, name );
 
 		return jsonWriter.toString();
 	}

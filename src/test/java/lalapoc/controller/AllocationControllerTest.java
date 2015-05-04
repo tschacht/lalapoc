@@ -2,7 +2,9 @@ package lalapoc.controller;
 
 import lalapoc.business.AllocationService;
 import lalapoc.entity.Name;
+import lalapoc.entity.Need;
 import lalapoc.entity.factory.NameFactory;
+import lalapoc.entity.factory.NeedFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,6 +72,20 @@ public class AllocationControllerTest {
 				.andExpect( status().isOk() );
 
 		verify( allocationServiceMock, times( 1 ) ).createName( any( Name.class ) );
+	}
+
+	@Test
+	public void testCreateNeed() throws Exception {
+		String jsonContent = NeedFactory.newNeedJSON( "Pants" );
+
+		mvc.perform( MockMvcRequestBuilders
+				.post( "/needs" )
+				.contentType( MediaType.APPLICATION_JSON )
+				.content( jsonContent )
+				.accept( MediaType.APPLICATION_JSON ) )
+				.andExpect( status().isOk() );
+
+		verify( allocationServiceMock, times( 1 ) ).createNeed( any( Need.class ) );
 	}
 
 }

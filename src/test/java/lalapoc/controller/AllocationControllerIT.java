@@ -2,6 +2,7 @@ package lalapoc.controller;
 
 import lalapoc.LalapocApplication;
 import lalapoc.entity.factory.NameFactory;
+import lalapoc.entity.factory.NeedFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,11 +20,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = LalapocApplication.class)
@@ -46,30 +50,67 @@ public class AllocationControllerIT {
 		return new Point( lon, lat );
 	}
 
-	private static String randNameJSON( Random r ) throws IOException {
+	private static String randNameJSON( Random r ) {
 		Point p = randPos( r );
 		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
-		return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), ZonedDateTime.now() );
+		try {
+			return NameFactory.newNameJson( "John Doe " + r.nextInt( 100 ), r.nextInt( 20 ), p.getY(), p.getX(), ZonedDateTime.now() );
+		} catch( IOException e ) {
+			e.printStackTrace();
+			fail( e.getMessage() );
+			return null;
+		}
 	}
 
-	private void createTestData() throws IOException {
-		final int n = 50;
-
-		Random r = new Random();
+	private void createTestNames( int n ) {
 		String url = base.toString() + "names";
+		Random r = new Random();
 
-		System.out.println( "#####" );
-		System.out.println( "creating n Names. n=" + n );
-		Instant begin = Instant.now();
-		System.out.println( "BEGIN: " + begin );
+		System.out.println( "Creating Names:" );
+
 		for( int i = 0; i < n; i++ ) {
 			doPostJson( randNameJSON( r ), url );
 			if( i % 5 == 0 ) System.out.print( i + ", " );
 		}
+	}
+
+	private void createTestNeeds() {
+		final String url = base.toString() + "needs";
+		final List<String> needDescriptionsSample = Arrays.asList( "Water", "Blankets", "Medical Assistance", "Medicine", "Cloth", "Protection", "Shelter" );
+
+		System.out.println( "Creating Needs:" );
+
+		for( String descr : needDescriptionsSample ) {
+			try {
+				doPostJson( NeedFactory.newNeedJSON( descr ), url );
+			} catch( IOException e ) {
+				e.printStackTrace();
+				fail( e.getMessage() );
+			}
+			System.out.print( descr + ", " );
+		}
+	}
+
+	private void runDecorated( Runnable r ) {
+		System.out.println( "#####" );
+		System.out.println( "Creating test data:" );
+		Instant begin = Instant.now();
+		System.out.println( "BEGIN: " + begin );
+
+		r.run();
+
 		Instant end = Instant.now();
 		System.out.println( "\nEND " + end );
 		System.out.println( "took millis: " + ( end.toEpochMilli() - begin.toEpochMilli() ) );
 		System.out.println( "#####" );
+	}
+
+	private void createTestData() throws IOException {
+		Runnable runCreateNames = () -> createTestNames( 50 );
+		Runnable runCreateNeeds = this::createTestNeeds;
+
+		runDecorated( runCreateNames );
+		runDecorated( runCreateNeeds );
 	}
 
 	@Before
@@ -95,6 +136,20 @@ public class AllocationControllerIT {
 
 		ResponseEntity<String> responseEntity = doPostJson( randNameJSON( r ), url );
 		assertThat( responseEntity.getBody().matches( "(.*John Doe.*){1}" ), is( true ) );
+	}
+
+	@Test
+	public void testReadNeed() throws Exception {
+		ResponseEntity<String> responseEntity = template.getForEntity( base.toString() + "needs", String.class );
+		assertThat( responseEntity.getBody().matches( "(.*description.*){5,}" ), is( true ) );
+	}
+
+	@Test
+	public void testCreateNeed() throws Exception {
+		String url = base.toString() + "needs";
+
+		ResponseEntity<String> responseEntity = doPostJson( NeedFactory.newNeedJSON( "Pants" ), url );
+		assertThat( responseEntity.getBody().matches( "(.*Pants.*){1}" ), is( true ) );
 	}
 
 	private ResponseEntity<String> doPostJson( String jsonContent, String url ) {

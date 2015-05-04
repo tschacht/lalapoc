@@ -32,4 +32,9 @@ public class AllocationController {
 		return allocationService.createName( name );
 	}
 
+	@RequestMapping(value = "/needs", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Need createNeed( @RequestBody Need need ) {
+		return allocationService.createNeed( need );
+	}
+
 }
