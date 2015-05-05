@@ -1,17 +1,23 @@
 package lalapoc.business;
 
 import com.google.common.collect.Lists;
+import lalapoc.entity.Asking;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
-import lalapoc.entity.Asking;
+import lalapoc.entity.index.LuceneTimelineIndexFactory;
 import lalapoc.repository.NameRepository;
 import lalapoc.repository.NeedRepository;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.index.lucene.TimelineIndex;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Named
@@ -26,18 +32,27 @@ public class AllocationService implements AllocationServiceMethods {
 	@Inject
 	private NeedRepository needRepository;
 
+	@Inject
+	private LuceneTimelineIndexFactory luceneTimelineIndexFactory;
+
 	@Override
 	@Transactional
 	@Fetch
 	public Name createName( Name name ) {
-		return nameRepository.save( name );
+		TimelineIndex<Node> timelineIndex = luceneTimelineIndexFactory.getNodeInstance();
+		nameRepository.saveOnly( name );
+		// feed timeline index
+		Node node = template.getNode( name.getId() );
+		timelineIndex.add( node, name.getTime().toInstant().toEpochMilli() );
+		return name;
 	}
 
 	@Override
 	@Transactional
 	@Fetch
 	public Need createNeed( Need need ) {
-		return needRepository.save( need );
+		needRepository.saveOnly( need );
+		return need;
 	}
 
 	@Override
@@ -126,6 +141,20 @@ public class AllocationService implements AllocationServiceMethods {
 	@Fetch
 	public Collection<Name> findNear( double lat, double lon, double distanceKm ) {
 		return Lists.newArrayList( nameRepository.findWithinDistance( Name.INDEX_POSITION, lat, lon, distanceKm ) );
+	}
+
+	@Override
+	public Collection<Name> findBetween( Instant start, Instant end ) {
+		IndexHits indexHits = luceneTimelineIndexFactory.getNodeInstance().getBetween( start.toEpochMilli(), end.toEpochMilli() );
+
+		//Result<Name> conversionResult=  template.convert( indexHits );
+		Collection<Name> result = new ArrayList<>();
+		for( int i = 0; i < indexHits.size(); i++ ) {
+			if( indexHits.hasNext() ) {
+				result.add( template.convert( indexHits.next(), Name.class ) );
+			}
+		}
+		return result;
 	}
 
 }

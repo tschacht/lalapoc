@@ -1,9 +1,10 @@
 package lalapoc.business;
 
+import lalapoc.entity.Asking;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
-import lalapoc.entity.Asking;
 
+import java.time.Instant;
 import java.util.Collection;
 
 public interface AllocationServiceMethods {
@@ -23,5 +24,7 @@ public interface AllocationServiceMethods {
 	Asking createAsking( Name name, int quantity, Need need );
 
 	Collection<Name> findNear( double lat, double lon, double distanceKm );
+
+	Collection<Name> findBetween( Instant start, Instant end );
 
 }

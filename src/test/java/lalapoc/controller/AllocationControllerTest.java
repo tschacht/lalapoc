@@ -1,6 +1,6 @@
 package lalapoc.controller;
 
-import lalapoc.business.AllocationService;
+import lalapoc.business.AllocationServiceMethods;
 import lalapoc.entity.Name;
 import lalapoc.entity.Need;
 import lalapoc.entity.factory.NameFactory;
@@ -34,7 +34,7 @@ public class AllocationControllerTest {
 	private MockMvc mvc;
 
 	@Mock
-	private AllocationService allocationServiceMock;
+	private AllocationServiceMethods allocationServiceMock;
 
 	@InjectMocks
 	private AllocationController testling;
