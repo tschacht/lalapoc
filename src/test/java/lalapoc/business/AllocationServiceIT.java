@@ -32,7 +32,7 @@ public class AllocationServiceIT {
 	@Test
 	public void testCreateNameFeedsTimelineIndexCorrectly() throws Exception {
 		ZonedDateTime now = ZonedDateTime.now();
-		Name name = NameFactory.newName( "Name IT", 3, 0, 0, now );
+		Name name = NameFactory.newName( "Time Query IT", 3, 0, 0, now );
 		ZonedDateTime before = now.minusDays( 5 );
 		ZonedDateTime after = now.plusSeconds( 7 );
 
@@ -43,12 +43,32 @@ public class AllocationServiceIT {
 		assertThat( result, notNullValue() );
 		assertThat( result.size(), greaterThan( 0 ) );
 
-		Set<Long> resultIds = new HashSet<>();
-		for( Name resultName : result ) {
-			resultIds.add( resultName.getId() );
-		}
+		Set<Long> resultIds = getIdsFrom( result );
+		assertThat( resultIds.contains( name.getId() ), is( true ) );
+	}
 
-		assertThat( resultIds, contains( name.getId() ) );
+	@Test
+	public void testSpatialWorks() throws Exception {
+		Name name = NameFactory.newName( "Spatial Query IT", 3, 1, 1, ZonedDateTime.now() );
+		testling.createName( name );
+		Collection<Name> result = testling.findNear( 1.0001, 1.0001, 5 );
+
+		assertThat( result, notNullValue() );
+		assertThat( result.size(), greaterThan( 0 ) );
+
+		Set<Long> resultIds = getIdsFrom( result );
+		assertThat( resultIds.contains( name.getId() ), is( true ) );
+	}
+
+	private static Set<Long> getIdsFrom( Collection<Name> names ) {
+		Set<Long> ids = new HashSet<>();
+		for( Name name : names ) {
+			Long id = name.getId();
+			if( id != null ) {
+				ids.add( id );
+			}
+		}
+		return ids;
 	}
 
 }

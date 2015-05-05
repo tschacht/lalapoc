@@ -67,7 +67,7 @@ public class AllocationServiceTest {
 	private Name name2Attached;
 
 	@InjectMocks
-	private AllocationServiceMethods testling;
+	private AllocationService testling;
 
 	@Before
 	public void setUp() throws Exception {

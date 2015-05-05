@@ -1,5 +1,6 @@
 package lalapoc.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.annotations.VisibleForTesting;
 import lalapoc.entity.factory.AskingFactory;
 import org.neo4j.graphdb.Direction;
@@ -30,9 +31,13 @@ public class Name extends BaseEntity {
 
 	private ZonedDateTime time;
 
+	/**
+	 * @deprecated only required by {@link org.springframework.data.neo4j.repository.SpatialRepository}
+	 */
+	//private String _wkt;
+
 	@Indexed(indexType = POINT, indexName = INDEX_POSITION)
-	//private String wkt; // must be named "wkt"
-	private Point wkt; // must be named "wkt"
+	private Point wkt;
 
 	//@RelatedTo( type = "ASKS_FOR", direction = Direction.OUTGOING )
 	//private Set<Need> needs;
@@ -72,9 +77,32 @@ public class Name extends BaseEntity {
 
 	public void setPosition( Point position ) {
 		// latitude -> y-axis (move vertically), longitude -> x-axis (move horizontally)
-		//this.wkt = String.format( "POINT( %.4f %.4f )", position.getY(), position.getX() );
 		this.wkt = position;
+		// only set wkt by position setter
+		//this._wkt = position == null ? null : String.format( "POINT( %.4f %.4f )", position.getX(), position.getY() );
 	}
+
+	/**
+	 * @deprecated only required by {@link org.springframework.data.neo4j.repository.SpatialRepository}
+	 */
+	/*
+	@Deprecated
+	@JsonIgnore
+	public String getWkt() {
+		return _wkt;
+	}
+	*/
+
+	/**
+	 * @deprecated only required by {@link org.springframework.data.neo4j.repository.SpatialRepository} use {@link #setPosition(Point)}
+	 */
+	/*
+	@Deprecated
+	@JsonIgnore
+	public void setWkt( String wkt ) {
+		this._wkt = wkt;
+	}
+	*/
 
 	public Set<Asking> getAskings() {
 		return askings;
